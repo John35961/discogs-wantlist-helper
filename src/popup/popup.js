@@ -110,8 +110,4 @@ Alpine.data('popup', () => ({
   },
 }))
 
-document.addEventListener('DOMContentLoaded', async () => {
-  Alpine.start();
-});
-
-window.Alpine = Alpine;
+Alpine.start();
