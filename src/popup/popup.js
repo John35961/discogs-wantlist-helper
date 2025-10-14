@@ -1,5 +1,5 @@
 import Alpine from '@alpinejs/csp';
-import { parseArtists } from '../background/discogs/utils.js';
+import { parseArtists, parseReleaseId } from '../background/discogs/utils.js';
 import '@fortawesome/fontawesome-free/css/all.css';
 
 Alpine.data('popup', () => ({
@@ -71,37 +71,42 @@ Alpine.data('popup', () => ({
   handleSubmit(e) {
     const form = e.target;
     const formData = new FormData(form);
-    const releaseId = formData.get('releaseId');
 
-    if (!releaseId) {
-      this.error = 'URL or release ID is missing';
-      this.message = '';
-      this.release = null;
-      return;
-    };
+    try {
+      const releaseId = parseReleaseId(formData.get('releaseId'));
 
-    chrome.runtime.sendMessage(
-      { action: 'addToWantlist', releaseId },
-      (response) => {
-
-        this.release = null;
+      if (!releaseId) {
+        this.error = 'URL or release ID is missing';
         this.message = '';
-        this.error = '';
+        this.release = null;
+        return;
+      };
 
-        if (response.success) {
-          this.message = response.message;
-          const info = response.release.basic_information;
-          this.userDetails.num_wantlist++;
-          this.release = {
-            ...info,
-            artists: parseArtists(info.artists),
-            uri: `https://discogs.com/release/${releaseId}`
+      chrome.runtime.sendMessage(
+        { action: 'addToWantlist', releaseId },
+        (response) => {
+
+          this.release = null;
+          this.message = '';
+          this.error = '';
+
+          if (response.success) {
+            this.message = response.message;
+            const info = response.release.basic_information;
+            this.userDetails.num_wantlist++;
+            this.release = {
+              ...info,
+              artists: parseArtists(info.artists),
+              uri: `https://discogs.com/release/${releaseId}`
+            }
           }
-        }
-        else {
-          this.error = response.error;
-        }
-      })
+          else {
+            this.error = response.error;
+          }
+        })
+    } catch (error) {
+      this.error = error.message;
+    }
   },
 }))
 

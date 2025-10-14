@@ -88,11 +88,6 @@ a {
   color: red;
 }
 
-.error-message i,
-.response-message i {
-  margin-right: 3px;
-}
-
 .response-message i {
   color: #17a34a;
 }

@@ -35,8 +35,7 @@
     </div>
 
     <form @submit.prevent="handleSubmit" class="form" id="submitForm" x-show="!loading && authorized">
-      <input class="form-input" x-model="releaseId" id="releaseId" name="releaseId" type="number"
-        placeholder="Enter URL or release ID">
+      <input class="form-input" name="releaseId" type="text" placeholder="Enter URL or release ID">
       <button class="primary-button" id="addManually">Add</button>
     </form>
 
