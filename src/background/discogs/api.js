@@ -1,0 +1,114 @@
+import OAuth from 'oauth-1.0a';
+import CryptoJS from 'crypto-js';
+import { CONSUMER_KEY, CONSUMER_SECRET } from './consts.js';
+
+const oauth = OAuth({
+  consumer: {
+    key: CONSUMER_KEY,
+    secret: CONSUMER_SECRET
+  },
+  signature_method: 'HMAC-SHA1',
+  hash_function(base_string, key) {
+    return CryptoJS.HmacSHA1(base_string, key).toString(CryptoJS.enc.Base64);
+  }
+});
+
+const getUser = async (username) => {
+  const requestData = {
+    url: `https://api.discogs.com/users/${username}`,
+    method: 'GET'
+  };
+
+  const res = await fetch(requestData.url, {
+    method: requestData.method,
+  });
+
+  if (!res.ok) {
+    throw new Error('Error fetching user');
+  };
+
+  const data = await res.json();
+
+  return data;
+}
+
+const getIdentity = async () => {
+  const stored = await chrome.storage.local.get(['accessToken', 'accessTokenSecret']);
+  const accessToken = stored.accessToken;
+  const accessTokenSecret = stored.accessTokenSecret;
+
+  const requestData = {
+    url: 'https://api.discogs.com/oauth/identity',
+    method: 'GET'
+  };
+
+  if (!accessToken || !accessTokenSecret) {
+    return;
+  };
+
+  const tokens = {
+    key: accessToken,
+    secret: accessTokenSecret
+  };
+
+  const headers = {
+    ...oauth.toHeader(oauth.authorize(requestData, tokens)),
+    'User-Agent': 'DiscogsWantlistExtension/0.1 (dev mode)'
+  }
+
+  const res = await fetch(requestData.url, {
+    method: requestData.method,
+    headers: headers
+  })
+
+  if (!res.ok) {
+    throw new Error('Error fetching identity');
+  }
+
+  const data = await res.json();
+
+  await chrome.storage.local.set({ username: data.username });
+
+  return data;
+}
+
+const addToWantlist = async (releaseId) => {
+  const stored = await chrome.storage.local.get(['accessToken', 'accessTokenSecret', 'username']);
+  const accessToken = stored.accessToken;
+  const accessTokenSecret = stored.accessTokenSecret;
+  const username = stored.username
+
+  const requestData = {
+    url: `https://api.discogs.com/users/${username}/wants/${releaseId}`,
+    method: 'PUT'
+  };
+
+  const tokens = {
+    key: accessToken,
+    secret: accessTokenSecret
+  };
+
+  const headers = oauth.toHeader(oauth.authorize(requestData, tokens));
+
+  headers['User-Agent'] = 'DiscogsWantlistExtension/1.0';
+  headers['Content-Type'] = 'application/json';
+
+  const res = await fetch(requestData.url, {
+    method: requestData.method,
+    headers: headers,
+    body: '',
+    mode: 'cors',
+    credentials: 'omit',
+    cache: 'no-store'
+  });
+
+  if (!res.ok) {
+    throw new Error('Error adding to wantlist');
+  };
+
+  const data = await res.json();
+
+  return data;
+};
+
+export { getIdentity, getUser, addToWantlist };
