@@ -27,4 +27,4 @@ const parseArtists = (artists) => {
   return artists.map((artist) => { return artist.name }).join(', ');
 }
 
-export { parseArtists, parseReleaseId, headersFrom, generateNonce };
+export { headersFrom, generateNonce, parseArtists, parseReleaseId };

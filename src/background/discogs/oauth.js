@@ -59,4 +59,4 @@ const getAccessToken = async (requestToken, requestTokenSecret, oauthVerifier) =
   return { accessToken, accessTokenSecret };
 }
 
-export { getAccessToken, getRequestToken }
+export { getRequestToken, getAccessToken }

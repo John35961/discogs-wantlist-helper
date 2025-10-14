@@ -111,4 +111,4 @@ const addToWantlist = async (releaseId) => {
   return data;
 };
 
-export { getIdentity, getUser, addToWantlist };
+export { getUser, getIdentity, addToWantlist };
