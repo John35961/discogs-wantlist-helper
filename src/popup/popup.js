@@ -76,9 +76,9 @@ Alpine.data('popup', () => ({
       const releaseId = parseReleaseId(formData.get('releaseId'));
 
       if (!releaseId) {
-        this.error = 'URL or release ID is missing';
-        this.message = '';
         this.release = null;
+        this.message = '';
+        this.error = 'URL or release ID is missing';
         return;
       };
 
@@ -91,9 +91,10 @@ Alpine.data('popup', () => ({
           this.error = '';
 
           if (response.success) {
-            this.message = response.message;
             const info = response.release.basic_information;
+
             this.userDetails.num_wantlist++;
+            this.message = response.message;
             this.release = {
               ...info,
               artists: parseArtists(info.artists),
@@ -105,6 +106,8 @@ Alpine.data('popup', () => ({
           }
         })
     } catch (error) {
+      this.release = null;
+      this.message = '';
       this.error = error.message;
     }
   },
