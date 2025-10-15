@@ -51,10 +51,7 @@ const getIdentity = async () => {
     secret: accessTokenSecret
   };
 
-  const headers = {
-    ...oauth.toHeader(oauth.authorize(requestData, tokens)),
-    'User-Agent': 'DiscogsWantlistExtension/0.1 (dev mode)'
-  }
+  const headers = oauth.toHeader(oauth.authorize(requestData, tokens));
 
   const res = await fetch(requestData.url, {
     method: requestData.method,
@@ -90,16 +87,10 @@ const addToWantlist = async (releaseId) => {
 
   const headers = oauth.toHeader(oauth.authorize(requestData, tokens));
 
-  headers['User-Agent'] = 'DiscogsWantlistExtension/1.0';
-  headers['Content-Type'] = 'application/json';
-
   const res = await fetch(requestData.url, {
     method: requestData.method,
     headers: headers,
-    body: '',
-    mode: 'cors',
     credentials: 'omit',
-    cache: 'no-store'
   });
 
   if (!res.ok) {
