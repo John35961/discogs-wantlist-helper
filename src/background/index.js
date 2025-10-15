@@ -1,50 +1,44 @@
 import { getRequestToken, getAccessToken } from './discogs/oauth.js';
 import { getIdentity, getUser, addToWantlist } from './discogs/api.js';
 
+const actions = {
+  async getRequestToken() {
+    const requestToken = await getRequestToken();
+    return { success: true, ...requestToken };
+  },
+
+  async completeAuthFlow({ requestToken, requestTokenSecret, verifier }) {
+    await getAccessToken(requestToken, requestTokenSecret, verifier);
+    const identity = await getIdentity();
+    return { success: true, ...identity };
+  },
+
+  async getIdentity() {
+    const identity = await getIdentity();
+    return { success: true, ...identity };
+  },
+
+  async getUser({ username }) {
+    const user = await getUser(username);
+    return { success: true, ...user };
+  },
+
+  async addToWantlist({ releaseId }) {
+    const release = await addToWantlist(releaseId);
+    return { success: true, release, message: `Added release to wantlist` };
+  },
+}
+
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   (async () => {
-    const action = message.action
+    const { action, ...payload } = message;
+    const handler = actions[action];
 
-    if (action == 'getRequestToken') {
-      const requestToken = await getRequestToken();
-      sendResponse({ success: true, ...requestToken });
-    }
-
-    if (action == 'completeAuthFlow') {
-      try {
-        await getAccessToken(message.requestToken, message.requestTokenSecret, message.verifier);
-        const identity = await getIdentity();
-        sendResponse({ success: true, ...identity });
-      } catch (error) {
-        sendResponse({ success: false, error: error.message });
-      }
-    }
-
-    if (action == 'getIdentity') {
-      try {
-        const identity = await getIdentity();
-        sendResponse({ success: true, ...identity });
-      } catch (error) {
-        sendResponse({ success: false });
-      }
-    }
-
-    if (action == 'getUser') {
-      try {
-        const user = await getUser(message.username);
-        sendResponse({ success: true, ...user });
-      } catch (error) {
-        sendResponse({ success: false });
-      }
-    }
-
-    if (action == 'addToWantlist') {
-      try {
-        const release = await addToWantlist(message.releaseId);
-        sendResponse({ success: true, release, message: `Added release to wantlist` });
-      } catch (error) {
-        sendResponse({ success: false, error: error.message });
-      }
+    try {
+      const result = await handler(payload);
+      sendResponse(result);
+    } catch (error) {
+      sendResponse({ success: false, error: error.message || 'Unexpected error' });
     }
   })();
 
