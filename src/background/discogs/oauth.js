@@ -34,7 +34,7 @@ const getAccessToken = async (requestToken, requestTokenSecret, oauthVerifier) =
   await chrome.storage.local.set({ accessToken, accessTokenSecret });
 
   return { accessToken, accessTokenSecret };
-}
+};
 
 const getIdentity = async () => {
   const stored = await chrome.storage.local.get(['accessToken', 'accessTokenSecret']);
@@ -58,6 +58,6 @@ const getIdentity = async () => {
   await chrome.storage.local.set({ username: data.username });
 
   return data;
-}
+};
 
 export { getRequestToken, getAccessToken, getIdentity }
