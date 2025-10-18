@@ -36,4 +36,28 @@ const getAccessToken = async (requestToken, requestTokenSecret, oauthVerifier) =
   return { accessToken, accessTokenSecret };
 }
 
-export { getRequestToken, getAccessToken }
+const getIdentity = async () => {
+  const stored = await chrome.storage.local.get(['accessToken', 'accessTokenSecret']);
+  const accessToken = stored.accessToken;
+  const accessTokenSecret = stored.accessTokenSecret;
+
+  if (!accessToken || !accessTokenSecret) {
+    return;
+  };
+
+  const res = await fetch(`${DISCOGS_API_WRAPPER_BASE_URL}/oauth/identity?accessToken=${accessToken}&accessTokenSecret=${accessTokenSecret}`, {
+    method: 'GET'
+  });
+
+  if (!res.ok) {
+    throw new Error(res.error);
+  };
+
+  const data = await res.json();
+
+  await chrome.storage.local.set({ username: data.username });
+
+  return data;
+}
+
+export { getRequestToken, getAccessToken, getIdentity }

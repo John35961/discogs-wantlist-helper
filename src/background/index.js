@@ -1,5 +1,5 @@
-import { getRequestToken, getAccessToken } from './discogs/oauth.js';
-import { getIdentity, getUser, addToWantlist } from './discogs/api.js';
+import { getRequestToken, getAccessToken, getIdentity } from './discogs/oauth.js';
+import { getUser, addToWantlist } from './discogs/api.js';
 
 const actions = {
   async getRequestToken() {

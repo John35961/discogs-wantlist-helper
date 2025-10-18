@@ -34,43 +34,6 @@ const getUser = async (username) => {
   return data;
 };
 
-const getIdentity = async () => {
-  const stored = await chrome.storage.local.get(['accessToken', 'accessTokenSecret']);
-  const accessToken = stored.accessToken;
-  const accessTokenSecret = stored.accessTokenSecret;
-
-  const requestData = {
-    url: 'https://api.discogs.com/oauth/identity',
-    method: 'GET'
-  };
-
-  if (!accessToken || !accessTokenSecret) {
-    return;
-  };
-
-  const tokens = {
-    key: accessToken,
-    secret: accessTokenSecret
-  };
-
-  const headers = oauth.toHeader(oauth.authorize(requestData, tokens));
-
-  const res = await fetch(requestData.url, {
-    method: requestData.method,
-    headers: headers
-  })
-
-  if (!res.ok) {
-    throw new Error('Error fetching identity');
-  }
-
-  const data = await res.json();
-
-  await chrome.storage.local.set({ username: data.username });
-
-  return data;
-}
-
 const addToWantlist = async (releaseId) => {
   const stored = await chrome.storage.local.get(['accessToken', 'accessTokenSecret', 'username']);
   const accessToken = stored.accessToken;
@@ -104,4 +67,4 @@ const addToWantlist = async (releaseId) => {
   return data;
 };
 
-export { getUser, getIdentity, addToWantlist };
+export { getUser, addToWantlist };
