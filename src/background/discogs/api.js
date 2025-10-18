@@ -13,9 +13,11 @@ const oauth = OAuth({
   }
 });
 
+const DISCOGS_API_WRAPPER_BASE_URL = import.meta.env.VITE_DISCOGS_API_WRAPPER_BASE_URL;
+
 const getUser = async (username) => {
   const requestData = {
-    url: `https://api.discogs.com/users/${username}`,
+    url: `${DISCOGS_API_WRAPPER_BASE_URL}/users/${username}`,
     method: 'GET'
   };
 
@@ -24,13 +26,13 @@ const getUser = async (username) => {
   });
 
   if (!res.ok) {
-    throw new Error('Error fetching user');
+    throw new Error(res.error);
   };
 
   const data = await res.json();
 
   return data;
-}
+};
 
 const getIdentity = async () => {
   const stored = await chrome.storage.local.get(['accessToken', 'accessTokenSecret']);
