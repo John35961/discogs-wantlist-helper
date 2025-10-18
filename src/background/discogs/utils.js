@@ -1,11 +1,3 @@
-const headersFrom = (params) => {
-  return Object.entries(params).map(([key, value]) => `${key}="${value}"`).join(',');
-}
-
-const generateNonce = () => {
-  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-}
-
 const parseReleaseId = (input) => {
   if (!input) return null;
 
@@ -27,4 +19,4 @@ const parseArtists = (artists) => {
   return artists.map((artist) => { return artist.name }).join(', ');
 }
 
-export { headersFrom, generateNonce, parseArtists, parseReleaseId };
+export { parseArtists, parseReleaseId };
