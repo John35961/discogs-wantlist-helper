@@ -1,18 +1,3 @@
-import OAuth from 'oauth-1.0a';
-import CryptoJS from 'crypto-js';
-import { CONSUMER_KEY, CONSUMER_SECRET } from './consts.js';
-
-const oauth = OAuth({
-  consumer: {
-    key: CONSUMER_KEY,
-    secret: CONSUMER_SECRET
-  },
-  signature_method: 'HMAC-SHA1',
-  hash_function(base_string, key) {
-    return CryptoJS.HmacSHA1(base_string, key).toString(CryptoJS.enc.Base64);
-  }
-});
-
 const DISCOGS_API_WRAPPER_BASE_URL = import.meta.env.VITE_DISCOGS_API_WRAPPER_BASE_URL;
 
 const getUser = async (username) => {
@@ -38,28 +23,19 @@ const addToWantlist = async (releaseId) => {
   const stored = await chrome.storage.local.get(['accessToken', 'accessTokenSecret', 'username']);
   const accessToken = stored.accessToken;
   const accessTokenSecret = stored.accessTokenSecret;
-  const username = stored.username
+  const userName = stored.username;
 
   const requestData = {
-    url: `https://api.discogs.com/users/${username}/wants/${releaseId}`,
+    url: `${DISCOGS_API_WRAPPER_BASE_URL}/users/${userName}/wants/${releaseId}?accessToken=${accessToken}&accessTokenSecret=${accessTokenSecret}`,
     method: 'PUT'
   };
 
-  const tokens = {
-    key: accessToken,
-    secret: accessTokenSecret
-  };
-
-  const headers = oauth.toHeader(oauth.authorize(requestData, tokens));
-
   const res = await fetch(requestData.url, {
     method: requestData.method,
-    headers: headers,
-    credentials: 'omit',
   });
 
   if (!res.ok) {
-    throw new Error('Error adding to wantlist');
+    throw new Error(res.error);
   };
 
   const data = await res.json();
