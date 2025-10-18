@@ -1,26 +1,21 @@
 import { headersFrom, generateNonce } from './utils.js';
 import { CONSUMER_KEY, CONSUMER_SECRET } from './consts.js';
 
+const DISCOGS_API_WRAPPER_BASE_URL = import.meta.env.VITE_DISCOGS_API_WRAPPER_BASE_URL;
+
 const getRequestToken = async () => {
-  const res = await fetch("https://api.discogs.com/oauth/request_token", {
-    method: 'GET',
-    headers: {
-      "Authorization": `OAuth oauth_consumer_key="${CONSUMER_KEY}",oauth_nonce="${generateNonce()}",oauth_signature="${CONSUMER_SECRET}&",oauth_signature_method="PLAINTEXT",oauth_timestamp="${Math.floor(Date.now() / 1000)}",oauth_callback="https://${chrome.runtime.id}.chromiumapp.org/"`
-    }
+  const res = await fetch(`${DISCOGS_API_WRAPPER_BASE_URL}/oauth/request_token`, {
+    method: 'GET'
   })
 
   if (!res.ok) {
-    throw new Error('Error fetching request token');
+    throw new Error(res.error);
   }
 
-  const text = await res.text();
-  const params = new URLSearchParams(text);
+  const data = await res.json();
 
-  return {
-    requestToken: params.get('oauth_token'),
-    requestTokenSecret: params.get('oauth_token_secret')
-  };
-}
+  return data;
+};
 
 const getAccessToken = async (requestToken, requestTokenSecret, oauthVerifier) => {
   const authParams = {
