@@ -27,8 +27,6 @@
     }
   ],
   "host_permissions": [
-    "https://api.discogs.com/*",
-    "https://*.discogs.com/*",
     "https://discogs-wantlist-helper-server.onrender.com/*"
   ],
   "externally_connectable": {
