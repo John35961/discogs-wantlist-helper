@@ -1,22 +1,28 @@
+const DISCOGS_RELEASE_REGEX = /discogs\.com\/release\/(\d+)/;
+const FALLBACK_DISCOGS_RELEASE_REGEX = /%2Fwww.discogs.com%2F.+%2Frelease%2F(\d+)/;
+
 const parseReleaseId = (input) => {
   if (!input) return null;
 
   if (/^\d+$/.test(input)) return input;
 
-  try {
-    const url = new URL(input);
-    const match = url.pathname.match(/\/release\/(\d+)/);
+  const match = input.match(DISCOGS_RELEASE_REGEX);
+  if (match && match[1]) return match[1];
 
-    if (match && match[1]) return match[1];
-  } catch (error) {
-    throw new Error("Invalid URL");
-  }
+  let result = match && match[1] ? match[1] : null;
 
-  return null;
-}
+  const fallbackMatch = input.match(FALLBACK_DISCOGS_RELEASE_REGEX);
+  result ??= fallbackMatch && fallbackMatch[1] ? fallbackMatch[1] : null;
+
+  if (!result) {
+    throw new Error("Must be a valid Discogs URL");
+  };
+
+  return result;
+};
 
 const parseArtists = (artists) => {
   return artists.map((artist) => { return artist.name }).join(', ');
-}
+};
 
 export { parseArtists, parseReleaseId };
