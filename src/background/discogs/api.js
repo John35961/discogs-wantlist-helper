@@ -26,12 +26,19 @@ const addToWantlist = async (releaseId) => {
   const userName = stored.username;
 
   const requestData = {
-    url: `${DISCOGS_API_WRAPPER_BASE_URL}/users/${userName}/wants/${releaseId}?accessToken=${accessToken}&accessTokenSecret=${accessTokenSecret}`,
-    method: 'PUT'
+    url: `${DISCOGS_API_WRAPPER_BASE_URL}/users/${userName}/wants/${releaseId}`,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      accessToken: accessToken,
+      accessTokenSecret: accessTokenSecret,
+    })
   };
 
   const res = await fetch(requestData.url, {
     method: requestData.method,
+    headers: requestData.headers,
+    body: requestData.body,
   });
 
   if (!res.ok) {
