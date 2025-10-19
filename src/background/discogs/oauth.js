@@ -45,7 +45,11 @@ const getIdentity = async () => {
     return;
   };
 
-  const res = await fetch(`${DISCOGS_API_WRAPPER_BASE_URL}/oauth/identity?accessToken=${accessToken}&accessTokenSecret=${accessTokenSecret}`, {
+  const url = new URL(`${DISCOGS_API_WRAPPER_BASE_URL}/oauth/identity`);
+  url.searchParams.set('accessToken', accessToken);
+  url.searchParams.set('accessTokenSecret', accessTokenSecret);
+
+  const res = await fetch(url, {
     method: 'GET'
   });
 
