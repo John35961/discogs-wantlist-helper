@@ -7,7 +7,9 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:dev": "vite build --mode development",
+    "build:dev:watch": "vite build --mode development --watch",
+    "build:prod": "vite build --mode production"
   },
   "keywords": [],
   "author": "",
