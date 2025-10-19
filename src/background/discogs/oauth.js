@@ -8,11 +8,11 @@ const getRequestToken = async () => {
     method: 'GET'
   });
 
-  if (!res.ok) {
-    throw new Error(res.error);
-  };
-
   const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.error);
+  };
 
   return data;
 };
@@ -28,11 +28,12 @@ const getAccessToken = async (requestToken, requestTokenSecret, oauthVerifier) =
     })
   });
 
+  const data = await res.json();
+
   if (!res.ok) {
-    throw new Error(res.error);
+    throw new Error(data.error);
   };
 
-  const data = await res.json();
   const { accessToken, accessTokenSecret } = data;
   await chrome.storage.local.set({ accessToken, accessTokenSecret });
 
@@ -56,11 +57,11 @@ const getIdentity = async () => {
     method: 'GET'
   });
 
-  if (!res.ok) {
-    throw new Error(res.error);
-  };
-
   const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.error);
+  };
 
   await chrome.storage.local.set({ username: data.username });
 

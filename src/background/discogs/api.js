@@ -10,11 +10,11 @@ const getUser = async (username) => {
     method: requestData.method,
   });
 
-  if (!res.ok) {
-    throw new Error(res.error);
-  };
-
   const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.error);
+  };
 
   return data;
 };
@@ -41,11 +41,11 @@ const addToWantlist = async (releaseId) => {
     body: requestData.body,
   });
 
-  if (!res.ok) {
-    throw new Error(res.error);
-  };
-
   const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.error);
+  };
 
   return data;
 };
