@@ -20,27 +20,29 @@ Alpine.data('popup', () => ({
       this.loading = false;
       this.authorized = false;
       return;
-    }
+    };
 
     if (authValid) {
       this.authorized = true;
-    }
+    };
 
     const stored = await chrome.storage.local.get(['username']);
     this.username = stored.username || '';
+
     if (!this.username) {
       this.loading = false;
       this.authorized = false;
       return;
-    }
+    };
 
     const user = await chrome.runtime.sendMessage({ action: 'getUser', username: this.username });
+
     if (user.success) {
       this.userDetails = {
         ...user,
         uri: `https://www.discogs.com/user/${user.username}`
       }
-    }
+    };
 
     this.loading = false;
   },
