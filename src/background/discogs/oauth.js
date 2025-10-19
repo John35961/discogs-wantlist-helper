@@ -1,7 +1,10 @@
 const DISCOGS_API_WRAPPER_BASE_URL = import.meta.env.VITE_DISCOGS_API_WRAPPER_BASE_URL;
 
 const getRequestToken = async () => {
-  const res = await fetch(`${DISCOGS_API_WRAPPER_BASE_URL}/oauth/request_token`, {
+  const url = new URL(`${DISCOGS_API_WRAPPER_BASE_URL}/oauth/request_token`);
+  url.searchParams.set('chromeRuntimeId', chrome.runtime.id);
+
+  const res = await fetch(url, {
     method: 'GET'
   });
 
