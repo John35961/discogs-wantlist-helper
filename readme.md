@@ -36,6 +36,6 @@ The extension works in conjuction with the [Discogs Wantlist Helper Server](http
 
 3. Install dependencies with `npm install`
 
-4. Build the extension with `npx vite build --watch`
+4. Build the extension with `npm run build:dev` (development mode), `npm run build:dev:watch` (development mode watching for file changes) or `npm run build:prod` (bundling for production)
 
 5. Then in `chrome://extensions/`, load the generated `/dist` folder as an unpacked extension
