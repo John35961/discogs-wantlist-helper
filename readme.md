@@ -30,7 +30,7 @@ The extension works in conjuction with the [Discogs Wantlist Helper Server](http
 
 ## Run locally
 
-1. First make sure your local Discogs API wrapper is up an running at `localhost:3000/discogs`
+1. First make sure your local Discogs API wrapper is up an running at `http://localhost:3000/discogs`
 
 2. Clone the repo with `git clone git@github.com:John35961/discogs-wantlist-helper.git` then `cd discogs-helper`
 
