@@ -119,11 +119,19 @@ a {
 }
 
 .error-message {
+  margin-top: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(255, 227, 227);
   color: red;
 }
 
-.response-message i {
-  color: #17a34a;
+.response-message {
+  margin-top: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #d7ffe7;
+  color: rgb(9, 43, 11);
 }
 
 .primary-button {
