@@ -75,21 +75,25 @@ Alpine.data('popup', () => ({
     this.message = '';
     this.error = '';
 
-    const releaseId = parseReleaseId(this.releaseId);
+    try {
+      const releaseId = parseReleaseId(this.releaseId);
 
-    if (!releaseId) {
-      this.error = 'URL or release ID is missing';
-      return;
-    };
+      if (!releaseId) {
+        this.error = 'URL or release ID is missing';
+        return;
+      };
 
-    const response = await chrome.runtime.sendMessage({ action: 'addToWantlist', releaseId });
+      const response = await chrome.runtime.sendMessage({ action: 'addToWantlist', releaseId });
 
-    if (response.success) {
-      this.message = response.message;
-      this.release = response.release;
-      this.userDetails.num_wantlist++;
-    } else {
-      this.error = response.error;
+      if (response.success) {
+        this.message = response.message;
+        this.release = response.release;
+        this.userDetails.num_wantlist++;
+      } else {
+        this.error = response.error;
+      };
+    } catch (error) {
+      this.error = error.message;
     };
   },
 
