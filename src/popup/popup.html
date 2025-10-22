@@ -34,10 +34,15 @@
       <button @click="initAuthFlow()" class="primary-button" x-show="!loading && !authorized">Authorize Discogs</button>
     </div>
 
-    <form @submit.prevent="handleSubmit" class="form" id="submitForm" x-show="!loading && authorized">
-      <input class="form-input" name="releaseId" type="text" placeholder="Enter URL or release ID">
-      <button class="primary-button" id="addManually">Add</button>
-    </form>
+    <div class="form" x-show="!loading && authorized">
+      <input class="form-input" type="text" x-model="releaseId" placeholder="Enter URL or release ID..." />
+      <button class="primary-button" @click="addByReleaseId">Go</button>
+    </div>
+
+    <div class="form" x-show="!loading && authorized">
+      <input class="form-input" type="text" x-model="query" placeholder="Enter an artist, a track..." />
+      <button class="primary-button" @click="search">Go</button>
+    </div>
 
     <template x-if="message">
       <div class="response-message">
@@ -63,6 +68,22 @@
           <span class="release-year" x-text="release.year"></span>
         </div>
         <img class="release-thumb" :src="release.thumb" />
+      </div>
+    </template>
+
+    <template x-if="results.length">
+      <div>
+        <template x-for="result in results" :key="result.id">
+          <div class="result-container">
+            <div class="result-details">
+              <a class="result-title" :href="result.uri" target="_blank" x-text="result.title"></a>
+              <span class="result-year" x-text="result.year"></span>
+              <button :class="{'result-added': result.status == 'Added'}" class="secondary-button"
+                @click="addFromSearch(result)" x-text="result.status"></button>
+            </div>
+            <img class="result-thumb" :src="result.thumb" />
+          </div>
+        </template>
       </div>
     </template>
   </div>

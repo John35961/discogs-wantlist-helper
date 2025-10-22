@@ -7,6 +7,8 @@ Alpine.data('popup', () => ({
   authorized: false,
   username: null,
   userDetails: {},
+  query: '',
+  results: [],
   releaseId: null,
   release: null,
   message: '',
@@ -66,17 +68,18 @@ Alpine.data('popup', () => ({
         console.log('Auth succeeded:', response.identity);
       } else {
         console.error('Auth failed:', response.error);
-      }
+      };
     });
   },
 
-  handleSubmit(e) {
-    const form = e.target;
-    const formData = new FormData(form);
+  addByReleaseId() {
+    this.release = null;
+    this.message = '';
+    this.error = '';
+
+    const releaseId = this.releaseId;
 
     try {
-      const releaseId = parseReleaseId(formData.get('releaseId'));
-
       if (!releaseId) {
         this.release = null;
         this.message = '';
@@ -112,6 +115,47 @@ Alpine.data('popup', () => ({
       this.message = '';
       this.error = error.message;
     }
+  },
+
+  async search() {
+    this.release = null;
+    this.message = '';
+    this.error = '';
+
+    const query = this.query;
+
+    if (!query) {
+      this.error = 'Search query missing';
+      return;
+    };
+
+    try {
+      const response = await chrome.runtime.sendMessage({ action: 'searchForReleases', query });
+
+      if (response.success) {
+        this.results = response.releases;
+      };
+    } catch (error) {
+      this.release = null;
+      this.message = '';
+      this.error = error.message;
+    };
+  },
+
+  async addFromSearch(release) {
+    const releaseId = release.id;
+
+    chrome.runtime.sendMessage(
+      { action: 'addToWantlist', releaseId },
+      (response) => {
+        if (response.success) {
+          release.status = 'Added';
+          this.userDetails.num_wantlist++;
+        }
+        else {
+          this.error = response.error;
+        }
+      })
   },
 }))
 

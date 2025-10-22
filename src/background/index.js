@@ -1,5 +1,5 @@
 import { getRequestToken, getAccessToken, getIdentity } from './discogs/oauth.js';
-import { getUser, addToWantlist } from './discogs/api.js';
+import { getUser, searchForReleases, addToWantlist } from './discogs/api.js';
 
 const actions = {
   async getRequestToken() {
@@ -21,6 +21,11 @@ const actions = {
   async getUser({ username }) {
     const user = await getUser(username);
     return { success: true, ...user };
+  },
+
+  async searchForReleases({ query }) {
+    const releases = await searchForReleases(query);
+    return { success: true, releases };
   },
 
   async addToWantlist({ releaseId }) {
