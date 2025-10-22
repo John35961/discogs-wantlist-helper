@@ -15,6 +15,15 @@ Alpine.data('popup', () => ({
   message: '',
   error: '',
 
+  selectTab(name) {
+    this.tab = name;
+    this.query = '';
+    this.releaseId = '';
+    this.release = null;
+    this.message = '';
+    this.error = '';
+  },
+
   async displayUser() {
     this.loading = true;
 
@@ -132,6 +141,6 @@ Alpine.data('popup', () => ({
       this.error = response.error;
     };
   },
-}))
+}));
 
 Alpine.start();
