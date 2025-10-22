@@ -21,8 +21,4 @@ const parseReleaseId = (input) => {
   return result;
 };
 
-const parseArtists = (artists) => {
-  return artists.map((artist) => { return artist.name }).join(', ');
-};
-
-export { parseArtists, parseReleaseId };
+export { parseReleaseId };

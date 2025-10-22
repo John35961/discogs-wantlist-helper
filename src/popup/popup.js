@@ -1,5 +1,5 @@
 import Alpine from '@alpinejs/csp';
-import { parseArtists, parseReleaseId } from '../background/discogs/utils.js';
+import { parseReleaseId } from '../background/discogs/utils.js';
 import '@fortawesome/fontawesome-free/css/all.css';
 
 Alpine.data('popup', () => ({
@@ -75,7 +75,7 @@ Alpine.data('popup', () => ({
     this.message = '';
     this.error = '';
 
-    const releaseId = this.releaseId;
+    const releaseId = parseReleaseId(this.releaseId);
 
     if (!releaseId) {
       this.error = 'URL or release ID is missing';
@@ -85,15 +85,9 @@ Alpine.data('popup', () => ({
     const response = await chrome.runtime.sendMessage({ action: 'addToWantlist', releaseId });
 
     if (response.success) {
-      const info = response.release.basic_information;
-
-      this.userDetails.num_wantlist++;
       this.message = response.message;
-      this.release = {
-        ...info,
-        artists: parseArtists(info.artists),
-        uri: `https://discogs.com/release/${releaseId}`
-      }
+      this.release = response.release;
+      this.userDetails.num_wantlist++;
     } else {
       this.error = response.error;
     };

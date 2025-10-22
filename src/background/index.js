@@ -30,7 +30,7 @@ const actions = {
 
   async addToWantlist({ releaseId }) {
     const release = await addToWantlist(releaseId);
-    return { success: true, release, message: `Added release to wantlist` };
+    return { success: true, ...release };
   },
 }
 
