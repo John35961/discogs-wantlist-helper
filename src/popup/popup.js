@@ -18,6 +18,7 @@ Alpine.data('popup', () => ({
     this.loading = true;
 
     const authValid = await chrome.runtime.sendMessage({ action: 'getIdentity' });
+
     if (!authValid.success) {
       this.loading = false;
       this.authorized = false;
@@ -37,12 +38,12 @@ Alpine.data('popup', () => ({
       return;
     };
 
-    const user = await chrome.runtime.sendMessage({ action: 'getUser', username: this.username });
+    const response = await chrome.runtime.sendMessage({ action: 'getUser', username: this.username });
 
-    if (user.success) {
+    if (response.success) {
       this.userDetails = {
-        ...user,
-        uri: `https://www.discogs.com/user/${user.username}`
+        ...response,
+        uri: `https://www.discogs.com/user/${response.username}`
       }
     };
 
@@ -61,60 +62,41 @@ Alpine.data('popup', () => ({
 
       const urlParams = new URLSearchParams(new URL(redirectUrl).search);
       const verifier = urlParams.get('oauth_verifier');
-
       const response = await chrome.runtime.sendMessage({ action: 'completeAuthFlow', requestToken, requestTokenSecret, verifier });
 
-      if (response.success) {
-        console.log('Auth succeeded:', response.identity);
-      } else {
-        console.error('Auth failed:', response.error);
+      if (!response.success) {
+        console.log('Auth failed:', response.error);
       };
     });
   },
 
-  addByReleaseId() {
+  async addByReleaseId() {
     this.release = null;
     this.message = '';
     this.error = '';
 
     const releaseId = this.releaseId;
 
-    try {
-      if (!releaseId) {
-        this.release = null;
-        this.message = '';
-        this.error = 'URL or release ID is missing';
-        return;
-      };
+    if (!releaseId) {
+      this.error = 'URL or release ID is missing';
+      return;
+    };
 
-      chrome.runtime.sendMessage(
-        { action: 'addToWantlist', releaseId },
-        (response) => {
+    const response = await chrome.runtime.sendMessage({ action: 'addToWantlist', releaseId });
 
-          this.release = null;
-          this.message = '';
-          this.error = '';
+    if (response.success) {
+      const info = response.release.basic_information;
 
-          if (response.success) {
-            const info = response.release.basic_information;
-
-            this.userDetails.num_wantlist++;
-            this.message = response.message;
-            this.release = {
-              ...info,
-              artists: parseArtists(info.artists),
-              uri: `https://discogs.com/release/${releaseId}`
-            }
-          }
-          else {
-            this.error = response.error;
-          }
-        })
-    } catch (error) {
-      this.release = null;
-      this.message = '';
-      this.error = error.message;
-    }
+      this.userDetails.num_wantlist++;
+      this.message = response.message;
+      this.release = {
+        ...info,
+        artists: parseArtists(info.artists),
+        uri: `https://discogs.com/release/${releaseId}`
+      }
+    } else {
+      this.error = response.error;
+    };
   },
 
   async search() {
@@ -129,33 +111,27 @@ Alpine.data('popup', () => ({
       return;
     };
 
-    try {
-      const response = await chrome.runtime.sendMessage({ action: 'searchForReleases', query });
+    const response = await chrome.runtime.sendMessage({ action: 'searchForReleases', query });
 
-      if (response.success) {
-        this.results = response.releases;
-      };
-    } catch (error) {
-      this.release = null;
-      this.message = '';
-      this.error = error.message;
-    };
+    if (response.success) {
+      this.results = response.releases;
+    } else {
+      this.error = error.message
+    }
   },
 
   async addFromSearch(release) {
     const releaseId = release.id;
 
-    chrome.runtime.sendMessage(
-      { action: 'addToWantlist', releaseId },
-      (response) => {
-        if (response.success) {
-          release.status = 'Added';
-          this.userDetails.num_wantlist++;
-        }
-        else {
-          this.error = response.error;
-        }
-      })
+    const response = await chrome.runtime.sendMessage({ action: 'addToWantlist', releaseId });
+
+    if (response.success) {
+      release.status = 'Added';
+      this.userDetails.num_wantlist++;
+    }
+    else {
+      this.error = response.error;
+    };
   },
 }))
 
