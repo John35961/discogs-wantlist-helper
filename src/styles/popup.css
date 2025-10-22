@@ -15,10 +15,16 @@ a {
   color: black;
 }
 
-.container {
+.container-between {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.container-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .header {

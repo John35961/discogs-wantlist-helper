@@ -16,7 +16,11 @@
   </div>
 
   <div class="content" x-data="popup" x-init="displayUser()">
-    <div class="container">
+    <div class="container-center" x-show="!loading && !authorized">
+      <button @click="initAuthFlow" class="primary-button">Authorize Discogs</button>
+    </div>
+
+    <div class="container-between">
       <div x-show="loading" class="loading-message">
         <img src="../assets/images/loader.gif" class="w-4 h-4" />
         <span>Loading...</span>
@@ -30,8 +34,6 @@
         <i class="fa-solid fa-eye"></i>
         <span x-text="userDetails.num_wantlist"></span>
       </div>
-
-      <button @click="initAuthFlow()" class="primary-button" x-show="!loading && !authorized">Authorize Discogs</button>
     </div>
 
     <div class="form" x-show="!loading && authorized">
