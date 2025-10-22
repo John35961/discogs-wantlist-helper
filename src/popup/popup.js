@@ -80,7 +80,7 @@ Alpine.data('popup', () => ({
     });
   },
 
-  async addByReleaseId() {
+  async handleAdd() {
     this.release = null;
     this.message = '';
     this.error = '';
@@ -93,21 +93,13 @@ Alpine.data('popup', () => ({
         return;
       };
 
-      const response = await chrome.runtime.sendMessage({ action: 'addToWantlist', releaseId });
-
-      if (response.success) {
-        this.message = response.message;
-        this.release = response.release;
-        this.userDetails.num_wantlist++;
-      } else {
-        this.error = response.error;
-      };
+      addReleaseFromAdd(releaseId);
     } catch (error) {
       this.error = error.message;
     };
   },
 
-  async search() {
+  async handleSearch() {
     this.results = [];
     this.message = '';
     this.error = '';
@@ -128,7 +120,19 @@ Alpine.data('popup', () => ({
     };
   },
 
-  async addFromSearch(result) {
+  async addReleaseFromAdd(releaseId) {
+    const response = await chrome.runtime.sendMessage({ action: 'addToWantlist', releaseId });
+
+    if (response.success) {
+      this.message = response.message;
+      this.release = response.release;
+      this.userDetails.num_wantlist++;
+    } else {
+      this.error = response.error;
+    };
+  },
+
+  async addReleaseFromSearch(result) {
     const releaseId = result.release.id;
 
     const response = await chrome.runtime.sendMessage({ action: 'addToWantlist', releaseId });

@@ -46,7 +46,7 @@
       <span @click="selectTab('search')" :class="tab === 'search' ? 'tab active' : 'tab'">
         <span>Search</span>
       </span>
-      <span @click="selectTab('addByReleaseId')" :class="tab === 'addByReleaseId' ? 'tab active' : 'tab'">
+      <span @click="selectTab('add')" :class="tab === 'add' ? 'tab active' : 'tab'">
         <span>Add</span>
       </span>
     </div>
@@ -54,7 +54,7 @@
     <div x-show=" tab==='search'">
       <div class=" form" x-show="!loading && authorized">
         <input class="form-input" type="text" x-model="query" placeholder="Enter an artist, a track..." />
-        <button class="primary-button" @click="search"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button class="primary-button" @click="handleSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
       </div>
 
       <template x-if="results.length">
@@ -65,7 +65,7 @@
                 <a class="result-title" :href="result.release.uri" target="_blank" x-text="result.release.title"></a>
                 <span class="result-year" x-text="result.release.year"></span>
                 <button :class="{'result-added': result.message == 'Added'}" class="secondary-button"
-                  @click="addFromSearch(result)" x-text="result.message"></button>
+                  @click="addReleaseFromSearch(result)" x-text="result.message"></button>
               </div>
               <img class="result-thumb" :src="result.release.thumb" />
             </div>
@@ -74,10 +74,10 @@
       </template>
     </div>
 
-    <div x-show="tab === 'addByReleaseId'">
+    <div x-show="tab === 'add'">
       <div class="form" x-show="!loading && authorized">
         <input class="form-input" type="text" x-model="releaseId" placeholder="Enter URL or release ID..." />
-        <button class="primary-button" @click="addByReleaseId"><i class="fa-solid fa-plus"></i></button>
+        <button class="primary-button" @click="handleAdd"><i class="fa-solid fa-plus"></i></button>
       </div>
 
       <template x-if="release">
