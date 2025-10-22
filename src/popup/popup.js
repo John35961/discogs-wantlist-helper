@@ -3,6 +3,7 @@ import { parseReleaseId } from '../background/discogs/utils.js';
 import '@fortawesome/fontawesome-free/css/all.css';
 
 Alpine.data('popup', () => ({
+  tab: 'search',
   loading: true,
   authorized: false,
   username: null,
