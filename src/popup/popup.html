@@ -16,23 +16,29 @@
   </div>
 
   <div class="content" x-data="popup" x-init="displayUser">
-    <div class="container-center" x-show="!loading && !authorized">
+    <div class="container" x-show="!loading && !authorized">
       <button @click="initAuthFlow" class="primary-button">Authorize Discogs</button>
     </div>
 
-    <div class="container-between">
+    <div class="container">
       <div x-show="loading" class="loading-message">
         <img src="../assets/images/loader.gif" class="w-4 h-4" />
         <span>Loading...</span>
       </div>
 
       <div x-show="!loading && authorized" class="status">
-        <img class="avatar" :src="userDetails.avatar_url">
-        <a :href="userDetails.uri" target="_blank" x-text="userDetails.name"></a>
-        <i class="fa-solid fa-barcode"></i>
-        <span x-text="userDetails.num_collection"></span>
-        <i class="fa-solid fa-eye"></i>
-        <span x-text="userDetails.num_wantlist"></span>
+        <div class="user" title="Your profile">
+          <img class="avatar" :src="userDetails.avatar_url">
+          <a :href="userDetails.uri" target="_blank" x-text="userDetails.name"></a>
+        </div>
+        <div class="in-collection" title="In collection">
+          <i class="fa-solid fa-barcode"></i>
+          <span x-text="userDetails.num_collection"></span>
+        </div>
+        <div class="in-wantlist" title="In wantlist">
+          <i class="fa-solid fa-eye"></i>
+          <span x-text="userDetails.num_wantlist"></span>
+        </div>
       </div>
     </div>
 
