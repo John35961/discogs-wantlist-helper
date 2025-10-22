@@ -38,7 +38,7 @@
 
     <div class="form" x-show="!loading && authorized">
       <input class="form-input" type="text" x-model="releaseId" placeholder="Enter URL or release ID..." />
-      <button class="primary-button" @click="addByReleaseId">Go</button>
+      <button class="primary-button" @click="addByReleaseId">Add</button>
     </div>
 
     <div class="form" x-show="!loading && authorized">
@@ -75,15 +75,15 @@
 
     <template x-if="results.length">
       <div>
-        <template x-for="result in results" :key="result.id">
+        <template x-for="result in results" :key="result.release.id">
           <div class="result-container">
             <div class="result-details">
-              <a class="result-title" :href="result.uri" target="_blank" x-text="result.title"></a>
-              <span class="result-year" x-text="result.year"></span>
-              <button :class="{'result-added': result.status == 'Added'}" class="secondary-button"
-                @click="addFromSearch(result)" x-text="result.status"></button>
+              <a class="result-title" :href="result.release.uri" target="_blank" x-text="result.release.title"></a>
+              <span class="result-year" x-text="result.release.year"></span>
+              <button :class="{'result-added': result.message == 'Added'}" class="secondary-button"
+                @click="addFromSearch(result)" x-text="result.message"></button>
             </div>
-            <img class="result-thumb" :src="result.thumb" />
+            <img class="result-thumb" :src="result.release.thumb" />
           </div>
         </template>
       </div>

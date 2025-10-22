@@ -24,8 +24,8 @@ const actions = {
   },
 
   async searchForReleases({ query }) {
-    const releases = await searchForReleases(query);
-    return { success: true, releases };
+    const results = await searchForReleases(query);
+    return { success: true, results };
   },
 
   async addToWantlist({ releaseId }) {

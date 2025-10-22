@@ -108,19 +108,19 @@ Alpine.data('popup', () => ({
     const response = await chrome.runtime.sendMessage({ action: 'searchForReleases', query });
 
     if (response.success) {
-      this.results = response.releases;
+      this.results = response.results;
     } else {
-      this.error = error.message
-    }
+      this.error = error.message;
+    };
   },
 
-  async addFromSearch(release) {
-    const releaseId = release.id;
+  async addFromSearch(result) {
+    const releaseId = result.release.id;
 
     const response = await chrome.runtime.sendMessage({ action: 'addToWantlist', releaseId });
 
     if (response.success) {
-      release.status = 'Added';
+      result.message = 'Added';
       this.userDetails.num_wantlist++;
     }
     else {
