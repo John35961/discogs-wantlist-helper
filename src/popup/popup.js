@@ -107,7 +107,7 @@ Alpine.data('popup', () => ({
     const query = this.query;
 
     if (!query) {
-      this.error = 'Search query missing';
+      this.error = 'Search query is missing';
       return;
     };
 
