@@ -108,7 +108,7 @@ Alpine.data('popup', () => ({
   },
 
   async search() {
-    this.release = null;
+    this.results = [];
     this.message = '';
     this.error = '';
 
