@@ -124,7 +124,7 @@ Alpine.data('popup', () => ({
     if (response.success) {
       this.results = response.results;
     } else {
-      this.error = error.message;
+      this.error = response.error;
     };
   },
 
