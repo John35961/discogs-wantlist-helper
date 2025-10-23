@@ -1,20 +1,25 @@
-.status {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 10px 0;
+.user {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f4f4f4;
 
-  .avatar {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-  }
-
-  .user,
-  .in-collection,
-  .in-wantlist {
+  .status {
     display: flex;
-    gap: 5px;
     align-items: center;
+    gap: 15px;
+    margin-bottom: 10px 0;
+
+    .avatar {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+    }
+
+    .username,
+    .in-collection,
+    .in-wantlist {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
   }
 }

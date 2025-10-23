@@ -19,14 +19,14 @@
       <button @click="initAuthFlow" class="primary-button">Authorize Discogs</button>
     </div>
 
-    <div class="container">
+    <div class="container user" x-data="user">
       <div x-show="loading" class="loading-message">
         <img src="../assets/images/loader.gif" />
         <span>Loading...</span>
       </div>
 
-      <div x-show="!loading && authorized" x-data="user" x-init="displayUser" class="status">
-        <div class="user" title="Your profile">
+      <div x-show="!loading && authorized" x-init="displayUser" class="status">
+        <div class="username" title="Your profile">
           <img class="avatar" :src="userDetails.avatar_url">
           <a :href="userDetails.uri" target="_blank" x-text="userDetails.name"></a>
         </div>
