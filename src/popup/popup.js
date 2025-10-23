@@ -1,4 +1,6 @@
 import Alpine from '@alpinejs/csp';
+import auth from '../components/auth.js';
+import user from '../components/user.js';
 import search from '../components/search.js';
 import add from '../components/add.js';
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -24,64 +26,10 @@ Alpine.data('popup', () => ({
     this.message = '';
     this.error = '';
   },
-
-  async displayUser() {
-    this.loading = true;
-
-    const authValid = await chrome.runtime.sendMessage({ action: 'getIdentity' });
-
-    if (!authValid.success) {
-      this.loading = false;
-      this.authorized = false;
-      return;
-    };
-
-    if (authValid) {
-      this.authorized = true;
-    };
-
-    const stored = await chrome.storage.local.get(['username']);
-    this.username = stored.username || '';
-
-    if (!this.username) {
-      this.loading = false;
-      this.authorized = false;
-      return;
-    };
-
-    const response = await chrome.runtime.sendMessage({ action: 'getUser', username: this.username });
-
-    if (response.success) {
-      this.userDetails = {
-        ...response,
-        uri: `https://www.discogs.com/user/${response.username}`
-      }
-    };
-
-    this.loading = false;
-  },
-
-  async initAuthFlow() {
-    const { requestToken, requestTokenSecret } = await chrome.runtime.sendMessage({ action: 'getRequestToken' });
-    const oauthUrl = `https://discogs.com/oauth/authorize?oauth_token=${requestToken}`;
-
-    chrome.identity.launchWebAuthFlow({ url: oauthUrl, interactive: true }, async (redirectUrl) => {
-      if (chrome.runtime.lastError) {
-        console.error('Auth failed:', chrome.runtime.lastError);
-        return;
-      };
-
-      const urlParams = new URLSearchParams(new URL(redirectUrl).search);
-      const verifier = urlParams.get('oauth_verifier');
-      const response = await chrome.runtime.sendMessage({ action: 'completeAuthFlow', requestToken, requestTokenSecret, verifier });
-
-      if (!response.success) {
-        console.log('Auth failed:', response.error);
-      };
-    });
-  },
 }));
 
+Alpine.data('auth', auth);
+Alpine.data('user', user);
 Alpine.data('search', search);
 Alpine.data('add', add);
 
