@@ -68,20 +68,6 @@
             <img class="result-thumb" :src="result.release.thumb" />
           </div>
         </template>
-
-        <template x-if="message">
-          <div class="response-message">
-            <i class="fa-solid fa-circle-check"></i>
-            <span x-text="message"></span>
-          </div>
-        </template>
-
-        <template x-if="error">
-          <div class="error-message">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-            <span x-text="error"></span>
-          </div>
-        </template>
       </div>
 
       <div x-data="add" x-show="tabName === 'add'">
@@ -102,22 +88,22 @@
             <img class="release-thumb" :src="release.thumb" />
           </div>
         </template>
-
-        <template x-if="message">
-          <div class="response-message">
-            <i class="fa-solid fa-circle-check"></i>
-            <span x-text="message"></span>
-          </div>
-        </template>
-
-        <template x-if="error">
-          <div class="error-message">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-            <span x-text="error"></span>
-          </div>
-        </template>
       </div>
     </div>
+
+    <template x-if="message">
+      <div class="response-message">
+        <i class="fa-solid fa-circle-check"></i>
+        <span x-text="message"></span>
+      </div>
+    </template>
+
+    <template x-if="error">
+      <div class="error-message">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span x-text="error"></span>
+      </div>
+    </template>
   </div>
 
   <script type="module" src="./popup.js"></script>
