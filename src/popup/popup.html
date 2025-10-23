@@ -41,80 +41,82 @@
       </div>
     </div>
 
-    <div x-show="!loading && authorized" class="tabs">
-      <span @click="selectTab('search')" :class="tab === 'search' ? 'tab active' : 'tab'">
-        <span>Search</span>
-      </span>
-      <span @click="selectTab('add')" :class="tab === 'add' ? 'tab active' : 'tab'">
-        <span>Add</span>
-      </span>
-    </div>
-
-    <div x-data="search" x-show="tab === 'search'">
-      <div class="form" x-show="!loading && authorized">
-        <input class="form-input" type="text" x-model="query" placeholder="Enter an artist, a track..." />
-        <button class="primary-button" @click="handleSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+    <div x-data="tab">
+      <div x-show="!loading && authorized" class="tabs">
+        <span @click="selectTab('search')" :class="isActiveTab('search')">
+          <span>Search</span>
+        </span>
+        <span @click="selectTab('add')" :class="isActiveTab('add')">
+          <span>Add</span>
+        </span>
       </div>
 
-      <template x-if="results.length" x-for="result in results" :key="result.release.id">
-        <div class="result-container">
-          <div class="result-details">
-            <a class="result-title" :href="result.release.uri" target="_blank" x-text="result.release.title"></a>
-            <span class="result-year" x-text="result.release.year"></span>
-            <button :class="{'result-added': result.message == 'Added'}" class="secondary-button"
-              @click="addReleaseFromSearch(result)" x-text="result.message"></button>
+      <div x-data="search" x-show="tabName === 'search'">
+        <div class="form" x-show="!loading && authorized">
+          <input class="form-input" type="text" x-model="query" placeholder="Enter an artist, a track..." />
+          <button class="primary-button" @click="handleSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+
+        <template x-if="results.length" x-for="result in results" :key="result.release.id">
+          <div class="result-container">
+            <div class="result-details">
+              <a class="result-title" :href="result.release.uri" target="_blank" x-text="result.release.title"></a>
+              <span class="result-year" x-text="result.release.year"></span>
+              <button :class="{'result-added': result.message == 'Added'}" class="secondary-button"
+                @click="addReleaseFromSearch(result)" x-text="result.message"></button>
+            </div>
+            <img class="result-thumb" :src="result.release.thumb" />
           </div>
-          <img class="result-thumb" :src="result.release.thumb" />
-        </div>
-      </template>
+        </template>
 
-      <template x-if="message">
-        <div class="response-message">
-          <i class="fa-solid fa-circle-check"></i>
-          <span x-text="message"></span>
-        </div>
-      </template>
+        <template x-if="message">
+          <div class="response-message">
+            <i class="fa-solid fa-circle-check"></i>
+            <span x-text="message"></span>
+          </div>
+        </template>
 
-      <template x-if="error">
-        <div class="error-message">
-          <i class="fa-solid fa-triangle-exclamation"></i>
-          <span x-text="error"></span>
-        </div>
-      </template>
-    </div>
-
-    <div x-data="add" x-show="tab === 'add'">
-      <div class="form" x-show="!loading && authorized">
-        <input class="form-input" type="text" x-model="releaseId" placeholder="Enter URL or release ID..." />
-        <button class="primary-button" @click="handleAdd"><i class="fa-solid fa-plus"></i></button>
+        <template x-if="error">
+          <div class="error-message">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span x-text="error"></span>
+          </div>
+        </template>
       </div>
 
-      <template x-if="release">
-        <div class="release-container">
-          <div class="release-details">
-            <span class="release-title">
-              <a :href="release.uri" target="_blank" x-text="release.title"></a>
-            </span>
-            <span x-text="release.artists"></span>
-            <span class="release-year" x-text="release.year"></span>
+      <div x-data="add" x-show="tabName === 'add'">
+        <div class="form" x-show="!loading && authorized">
+          <input class="form-input" type="text" x-model="releaseId" placeholder="Enter URL or release ID..." />
+          <button class="primary-button" @click="handleAdd"><i class="fa-solid fa-plus"></i></button>
+        </div>
+
+        <template x-if="release">
+          <div class="release-container">
+            <div class="release-details">
+              <span class="release-title">
+                <a :href="release.uri" target="_blank" x-text="release.title"></a>
+              </span>
+              <span x-text="release.artists"></span>
+              <span class="release-year" x-text="release.year"></span>
+            </div>
+            <img class="release-thumb" :src="release.thumb" />
           </div>
-          <img class="release-thumb" :src="release.thumb" />
-        </div>
-      </template>
+        </template>
 
-      <template x-if="message">
-        <div class="response-message">
-          <i class="fa-solid fa-circle-check"></i>
-          <span x-text="message"></span>
-        </div>
-      </template>
+        <template x-if="message">
+          <div class="response-message">
+            <i class="fa-solid fa-circle-check"></i>
+            <span x-text="message"></span>
+          </div>
+        </template>
 
-      <template x-if="error">
-        <div class="error-message">
-          <i class="fa-solid fa-triangle-exclamation"></i>
-          <span x-text="error"></span>
-        </div>
-      </template>
+        <template x-if="error">
+          <div class="error-message">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span x-text="error"></span>
+          </div>
+        </template>
+      </div>
     </div>
   </div>
 
