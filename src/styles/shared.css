@@ -54,6 +54,7 @@
 }
 
 .primary-button {
+  width: fit-content;
   padding: 8px 15px;
   border: none;
   border-radius: 5px;
@@ -69,6 +70,7 @@
 }
 
 .secondary-button {
+  width: fit-content;
   padding: 8px 15px;
   border: none;
   border-radius: 5px;
