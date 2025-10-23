@@ -57,6 +57,20 @@
           <button class="primary-button" @click="handleSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
 
+        <template x-if="message">
+          <div class="response-message">
+            <i class="fa-solid fa-circle-check"></i>
+            <span x-text="message"></span>
+          </div>
+        </template>
+
+        <template x-if="error">
+          <div class="error-message">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span x-text="error"></span>
+          </div>
+        </template>
+
         <div x-show="fetching" class="container loading-message">
           <img src="../assets/images/loader.gif" />
           <span>Searching...</span>
@@ -81,6 +95,20 @@
           <button class="primary-button" @click="handleAdd"><i class="fa-solid fa-plus"></i></button>
         </div>
 
+        <template x-if="message">
+          <div class="response-message">
+            <i class="fa-solid fa-circle-check"></i>
+            <span x-text="message"></span>
+          </div>
+        </template>
+
+        <template x-if="error">
+          <div class="error-message">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span x-text="error"></span>
+          </div>
+        </template>
+
         <template x-if="release">
           <div class="release">
             <div class="release-details">
@@ -95,20 +123,6 @@
         </template>
       </div>
     </div>
-
-    <template x-if="message">
-      <div class="response-message">
-        <i class="fa-solid fa-circle-check"></i>
-        <span x-text="message"></span>
-      </div>
-    </template>
-
-    <template x-if="error">
-      <div class="error-message">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        <span x-text="error"></span>
-      </div>
-    </template>
   </div>
 
   <script type="module" src="./popup.js"></script>
