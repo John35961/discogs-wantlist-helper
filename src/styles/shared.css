@@ -90,7 +90,7 @@
 .loading-message {
   display: flex;
   align-items: center;
-  margin: 5px auto;
+  margin: 15px auto;
 
   img {
     width: 30px;
