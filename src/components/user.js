@@ -1,3 +1,5 @@
+const DISCOGS_WEBSITE_BASE_URL = import.meta.env.VITE_DISCOGS_WEBSITE_BASE_URL;
+
 export default function () {
   return {
     async displayUser() {
@@ -29,7 +31,7 @@ export default function () {
       if (response.success) {
         this.userDetails = {
           ...response,
-          uri: `https://www.discogs.com/user/${response.username}`
+          uri: `${DISCOGS_WEBSITE_BASE_URL}/user/${response.username}`
         }
       };
 

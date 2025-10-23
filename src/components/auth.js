@@ -1,8 +1,10 @@
+const DISCOGS_WEBSITE_BASE_URL = import.meta.env.VITE_DISCOGS_WEBSITE_BASE_URL;
+
 export default function () {
   return {
     async initAuthFlow() {
       const { requestToken, requestTokenSecret } = await chrome.runtime.sendMessage({ action: 'getRequestToken' });
-      const oauthUrl = `https://discogs.com/oauth/authorize?oauth_token=${requestToken}`;
+      const oauthUrl = `${DISCOGS_WEBSITE_BASE_URL}/oauth/authorize?oauth_token=${requestToken}`;
 
       chrome.identity.launchWebAuthFlow({ url: oauthUrl, interactive: true }, async (redirectUrl) => {
         if (chrome.runtime.lastError) {

@@ -57,7 +57,7 @@
           <button class="primary-button" @click="handleSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
 
-        <template x-if="results.length" x-for="result in results" :key="result.release.id">
+        <template x-show="results.length" x-for="result in results" :key="result.release.id">
           <div class="result-container">
             <div class="result-details">
               <a class="result-title" :href="result.release.uri" target="_blank" x-text="result.release.title"></a>
