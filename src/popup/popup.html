@@ -80,6 +80,7 @@
           <div class="result">
             <div class="result-details">
               <a class="result-title" :href="result.release.uri" target="_blank" x-text="result.release.title"></a>
+              <span class="result-styles" x-text="result.release.styles"></span>
               <span class="result-year" x-text="result.release.year"></span>
               <button @click="addReleaseFromSearch(result)" :class="onAdded(result)" class="secondary-button"
                 x-text=" result.message"></button>
@@ -116,6 +117,7 @@
                 <a :href="release.uri" target="_blank" x-text="release.title"></a>
               </span>
               <span x-text="release.artists"></span>
+              <span class="release-styles" x-text="release.styles"></span>
               <span class="release-year" x-text="release.year"></span>
             </div>
             <img class="release-thumb" :src="release.thumb" />
