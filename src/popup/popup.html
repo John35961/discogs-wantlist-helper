@@ -110,6 +110,11 @@
           </div>
         </template>
 
+        <div x-show="fetching" class="container loading-message">
+          <img src="../assets/images/loader.gif" />
+          <span>Adding...</span>
+        </div>
+
         <template x-if="release">
           <div class="release">
             <div class="release-details">
