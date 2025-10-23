@@ -67,9 +67,23 @@
           <img class="result-thumb" :src="result.release.thumb" />
         </div>
       </template>
+
+      <template x-if="message">
+        <div class="response-message">
+          <i class="fa-solid fa-circle-check"></i>
+          <span x-text="message"></span>
+        </div>
+      </template>
+
+      <template x-if="error">
+        <div class="error-message">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span x-text="error"></span>
+        </div>
+      </template>
     </div>
 
-    <div x-show="tab === 'add'">
+    <div x-data="add" x-show="tab === 'add'">
       <div class="form" x-show="!loading && authorized">
         <input class="form-input" type="text" x-model="releaseId" placeholder="Enter URL or release ID..." />
         <button class="primary-button" @click="handleAdd"><i class="fa-solid fa-plus"></i></button>
@@ -87,21 +101,21 @@
           <img class="release-thumb" :src="release.thumb" />
         </div>
       </template>
+
+      <template x-if="message">
+        <div class="response-message">
+          <i class="fa-solid fa-circle-check"></i>
+          <span x-text="message"></span>
+        </div>
+      </template>
+
+      <template x-if="error">
+        <div class="error-message">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span x-text="error"></span>
+        </div>
+      </template>
     </div>
-
-    <template x-if="message">
-      <div class="response-message">
-        <i class="fa-solid fa-circle-check"></i>
-        <span x-text="message"></span>
-      </div>
-    </template>
-
-    <template x-if="error">
-      <div class="error-message">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        <span x-text="error"></span>
-      </div>
-    </template>
   </div>
 
   <script type="module" src="./popup.js"></script>

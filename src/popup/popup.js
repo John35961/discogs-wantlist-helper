@@ -1,5 +1,5 @@
 import Alpine from '@alpinejs/csp';
-import { parseReleaseId } from '../background/discogs/utils.js';
+import add from '../components/add.js';
 import '@fortawesome/fontawesome-free/css/all.css';
 
 Alpine.data('popup', () => ({
@@ -80,25 +80,6 @@ Alpine.data('popup', () => ({
     });
   },
 
-  async handleAdd() {
-    this.release = null;
-    this.message = '';
-    this.error = '';
-
-    try {
-      const releaseId = parseReleaseId(this.releaseId);
-
-      if (!releaseId) {
-        this.error = 'URL or release ID is missing';
-        return;
-      };
-
-      addReleaseFromAdd(releaseId);
-    } catch (error) {
-      this.error = error.message;
-    };
-  },
-
   async handleSearch() {
     this.results = [];
     this.message = '';
@@ -120,18 +101,6 @@ Alpine.data('popup', () => ({
     };
   },
 
-  async addReleaseFromAdd(releaseId) {
-    const response = await chrome.runtime.sendMessage({ action: 'addToWantlist', releaseId });
-
-    if (response.success) {
-      this.message = response.message;
-      this.release = response.release;
-      this.userDetails.num_wantlist++;
-    } else {
-      this.error = response.error;
-    };
-  },
-
   async addReleaseFromSearch(result) {
     const releaseId = result.release.id;
 
@@ -146,5 +115,7 @@ Alpine.data('popup', () => ({
     };
   },
 }));
+
+Alpine.data('add', add);
 
 Alpine.start();
