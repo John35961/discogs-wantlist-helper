@@ -3,7 +3,7 @@
 
 <head>
   <title>Discogs Wantlist Helper</title>
-  <link rel="stylesheet" href="../styles/popup.css">
+  <link rel="stylesheet" href="../styles/index.css">
   <meta charset="UTF-8">
 </head>
 
@@ -63,7 +63,7 @@
         </div>
 
         <template x-show="results.length" x-for="result in results" :key="result.release.id">
-          <div class="result-container">
+          <div class="result">
             <div class="result-details">
               <a class="result-title" :href="result.release.uri" target="_blank" x-text="result.release.title"></a>
               <span class="result-year" x-text="result.release.year"></span>
@@ -82,7 +82,7 @@
         </div>
 
         <template x-if="release">
-          <div class="release-container">
+          <div class="release">
             <div class="release-details">
               <span class="release-title">
                 <a :href="release.uri" target="_blank" x-text="release.title"></a>
