@@ -1,40 +1,52 @@
-.result {
+.search {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
   gap: 5px;
-  justify-content: space-evenly;
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  background: #f4f4f4;
 
-  .result-details {
-    width: 70%;
-    padding-right: 15px;
+  .results {
     display: flex;
     flex-direction: column;
-  }
+    margin-top: 5px;
+    gap: 10px;
 
-  .result-title {
-    font-weight: 700;
-    margin-top: 10px;
-  }
+    .result {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      justify-content: space-evenly;
+      padding: 10px;
+      border-radius: 5px;
+      background: #f4f4f4;
 
-  .result-year {
-    font-style: italic;
-    margin-bottom: 10px;
-  }
+      .result-details {
+        width: 70%;
+        padding-right: 15px;
+        display: flex;
+        flex-direction: column;
+      }
 
-  .result-thumb {
-    width: 30%;
-    width: 75px;
-    height: 75px;
-    border-radius: 5px;
-  }
+      .result-title {
+        font-weight: 700;
+        margin-top: 10px;
+      }
 
-  .result-added {
-    color: #17a34a;
-    border: 1px solid #17a34a;
+      .result-year {
+        font-style: italic;
+        margin-bottom: 10px;
+      }
+
+      .result-thumb {
+        width: 30%;
+        width: 75px;
+        height: 75px;
+        border-radius: 5px;
+      }
+
+      .result-added {
+        color: #17a34a;
+        border: 1px solid #17a34a;
+      }
+    }
   }
 }

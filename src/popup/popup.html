@@ -51,7 +51,7 @@
         </span>
       </div>
 
-      <div x-data="search" x-show="tabName === 'search'">
+      <div x-data="search" x-show="tabName === 'search'" class="search">
         <div class="form" x-show="!loading && authorized">
           <input class="form-input" type="text" x-model="query" placeholder="Enter an artist, a track..." />
           <button class="primary-button" @click="handleSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -76,21 +76,25 @@
           <span>Searching...</span>
         </div>
 
-        <template x-show="results.length" x-for="result in results" :key="result.release.id">
-          <div class="result">
-            <div class="result-details">
-              <a class="result-title" :href="result.release.uri" target="_blank" x-text="result.release.title"></a>
-              <span class="result-styles" x-text="result.release.styles"></span>
-              <span class="result-year" x-text="result.release.year"></span>
-              <button @click="addReleaseFromSearch(result)" :class="onAdded(result)" class="secondary-button"
-                x-text=" result.message"></button>
-            </div>
-            <img class="result-thumb" :src="result.release.thumb" />
+        <template x-if="results.length">
+          <div class="results">
+            <template x-for="result in results" :key="result.release.id">
+              <div class="result">
+                <div class="result-details">
+                  <a class="result-title" :href="result.release.uri" target="_blank" x-text="result.release.title"></a>
+                  <span class="result-styles" x-text="result.release.styles"></span>
+                  <span class="result-year" x-text="result.release.year"></span>
+                  <button @click="addReleaseFromSearch(result)" :class="onAdded(result)" class="secondary-button"
+                    x-text=" result.message"></button>
+                </div>
+                <img class="result-thumb" :src="result.release.thumb" />
+              </div>
+            </template>
           </div>
         </template>
       </div>
 
-      <div x-data="add" x-show="tabName === 'add'">
+      <div x-data="add" x-show="tabName === 'add'" class="add">
         <div class="form" x-show="!loading && authorized">
           <input class="form-input" type="text" x-model="releaseId" placeholder="Enter URL or release ID..." />
           <button class="primary-button" @click="handleAdd"><i class="fa-solid fa-plus"></i></button>
