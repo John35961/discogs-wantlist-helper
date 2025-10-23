@@ -62,8 +62,8 @@
             <div class="result-details">
               <a class="result-title" :href="result.release.uri" target="_blank" x-text="result.release.title"></a>
               <span class="result-year" x-text="result.release.year"></span>
-              <button :class="{'result-added': result.message == 'Added'}" class="secondary-button"
-                @click="addReleaseFromSearch(result)" x-text="result.message"></button>
+              <button @click="addReleaseFromSearch(result)" :class="onAdded(result)" class="secondary-button"
+                x-text=" result.message"></button>
             </div>
             <img class="result-thumb" :src="result.release.thumb" />
           </div>

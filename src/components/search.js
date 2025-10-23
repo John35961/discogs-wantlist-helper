@@ -34,5 +34,9 @@ export default function () {
         this.error = response.error;
       };
     },
+
+    onAdded(result) {
+      if (result.message == 'Added') return 'result-added';
+    },
   };
 };
