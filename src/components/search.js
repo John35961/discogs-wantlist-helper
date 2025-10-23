@@ -1,6 +1,9 @@
 export default function () {
   return {
+    fetching: false,
+
     async handleSearch() {
+      this.fetching = true;
       this.results = [];
       this.message = '';
       this.error = '';
@@ -9,6 +12,7 @@ export default function () {
 
       if (!query) {
         this.error = 'Search query is missing';
+        this.fetching = false;
         return;
       };
 
@@ -19,6 +23,8 @@ export default function () {
       } else {
         this.error = response.error;
       };
+
+      this.fetching = false;
     },
 
     async addReleaseFromSearch(result) {

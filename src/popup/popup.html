@@ -21,7 +21,7 @@
 
     <div class="container">
       <div x-show="loading" class="loading-message">
-        <img src="../assets/images/loader.gif" class="w-4 h-4" />
+        <img src="../assets/images/loader.gif" />
         <span>Loading...</span>
       </div>
 
@@ -55,6 +55,11 @@
         <div class="form" x-show="!loading && authorized">
           <input class="form-input" type="text" x-model="query" placeholder="Enter an artist, a track..." />
           <button class="primary-button" @click="handleSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+
+        <div x-show="fetching" class="container loading-message">
+          <img src="../assets/images/loader.gif" />
+          <span>Searching...</span>
         </div>
 
         <template x-show="results.length" x-for="result in results" :key="result.release.id">
