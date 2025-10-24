@@ -32,6 +32,7 @@ export default function () {
       } catch (error) {
         this.error = error.message;
       };
+
       this.fetching = false;
     },
   };
