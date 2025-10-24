@@ -28,7 +28,7 @@ Chrome extension to let you add a record to your Discogs wantlist efortlessly. U
 
 ## Run locally
 
-1. First make sure your local Discogs API wrapper is up an running at `http://localhost:3000/discogs/api/v1`
+1. First make sure your local Discogs API wrapper is up and running at `http://localhost:3000/discogs/api/v1`
 
 2. Clone the repo with `git clone git@github.com:John35961/discogs-wantlist-helper.git` then `cd discogs-helper`
 
