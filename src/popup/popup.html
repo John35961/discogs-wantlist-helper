@@ -27,16 +27,16 @@
 
       <div x-show="!loading && authorized" x-init="displayUser" class="status">
         <div class="username" title="Your profile">
-          <img class="avatar" :src="userDetails.avatar_url">
-          <a :href="userDetails.uri" target="_blank" x-text="userDetails.name"></a>
+          <img class="avatar" :src="user.avatar_url">
+          <a :href="user.uri" target="_blank" x-text="user.name"></a>
         </div>
         <div class="in-collection" title="In collection">
           <i class="fa-solid fa-barcode"></i>
-          <span x-text="userDetails.num_collection"></span>
+          <span x-text="user.num_collection"></span>
         </div>
         <div class="in-wantlist" title="In wantlist">
           <i class="fa-solid fa-eye"></i>
-          <span x-text="userDetails.num_wantlist"></span>
+          <span x-text="user.num_wantlist"></span>
         </div>
       </div>
     </div>

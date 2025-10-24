@@ -10,7 +10,7 @@ Alpine.data('popup', () => ({
   loading: true,
   authorized: false,
   username: null,
-  userDetails: {},
+  user: {},
   query: '',
   results: [],
   releaseId: null,

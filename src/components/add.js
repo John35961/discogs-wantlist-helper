@@ -24,7 +24,7 @@ export default function () {
         if (response.success) {
           this.message = response.message;
           this.release = response.release;
-          this.userDetails.num_wantlist++;
+          this.user.num_wantlist++;
         } else {
           this.error = response.error;
 

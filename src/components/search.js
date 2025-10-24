@@ -34,7 +34,7 @@ export default function () {
 
       if (response.success) {
         result.message = 'Added';
-        this.userDetails.num_wantlist++;
+        this.user.num_wantlist++;
       }
       else {
         this.error = response.error;

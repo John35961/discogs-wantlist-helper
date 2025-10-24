@@ -29,10 +29,7 @@ export default function () {
       const response = await chrome.runtime.sendMessage({ action: 'getUser', username: this.username });
 
       if (response.success) {
-        this.userDetails = {
-          ...response,
-          uri: `${DISCOGS_WEBSITE_BASE_URL}/user/${response.username}`
-        }
+        this.user = response.user;
       };
 
       this.loading = false;
