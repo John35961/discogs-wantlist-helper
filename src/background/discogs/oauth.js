@@ -10,9 +10,7 @@ const getRequestToken = async () => {
 
   const data = await res.json();
 
-  if (!res.ok) {
-    throw new Error(data.error);
-  };
+  if (!res.ok) throw new Error(data.message);
 
   return data;
 };
@@ -30,9 +28,7 @@ const getAccessToken = async (requestToken, requestTokenSecret, oauthVerifier) =
 
   const data = await res.json();
 
-  if (!res.ok) {
-    throw new Error(data.error);
-  };
+  if (!res.ok) throw new Error(data.message);
 
   const { accessToken, accessTokenSecret } = data;
   await chrome.storage.local.set({ accessToken, accessTokenSecret });
@@ -59,9 +55,7 @@ const getIdentity = async () => {
 
   const data = await res.json();
 
-  if (!res.ok) {
-    throw new Error(data.error);
-  };
+  if (!res.ok) throw new Error(data.message);
 
   await chrome.storage.local.set({ username: data.username });
 

@@ -12,9 +12,7 @@ const getUser = async (username) => {
 
   const data = await res.json();
 
-  if (!res.ok) {
-    throw new Error(data.error);
-  };
+  if (!res.ok) throw new Error(data.message);
 
   return data;
 };
@@ -40,9 +38,7 @@ const searchForReleases = async (query) => {
 
   const data = await res.json();
 
-  if (!res.ok) {
-    throw new Error(data.error);
-  };
+  if (!res.ok) throw new Error(data.message);
 
   return data;
 }
@@ -71,9 +67,7 @@ const addToWantlist = async (releaseId) => {
 
   const data = await res.json();
 
-  if (!res.ok) {
-    throw new Error(data.error);
-  };
+  if (!res.ok) throw new Error(data.message);
 
   return data;
 };
