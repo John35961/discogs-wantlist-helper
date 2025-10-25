@@ -1,7 +1,7 @@
 const DISCOGS_RELEASE_REGEX = /discogs\.com\/release\/(\d+)/;
 const FALLBACK_DISCOGS_RELEASE_REGEX = /%2Fwww.discogs.com%2F.+%2Frelease%2F(\d+)/;
 
-const parseReleaseId = (input) => {
+export const parseReleaseId = (input) => {
   if (!input) return null;
 
   if (/^\d+$/.test(input)) return input;
@@ -20,5 +20,3 @@ const parseReleaseId = (input) => {
 
   return result;
 };
-
-export { parseReleaseId };
