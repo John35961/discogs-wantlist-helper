@@ -17,7 +17,7 @@ export default function () {
         const response = await chrome.runtime.sendMessage({ action: 'completeAuthFlow', requestToken, requestTokenSecret, verifier });
 
         if (!response.success) {
-          console.log('Auth failed:', response.error);
+          console.error('Auth failed:', response.error);
         };
       });
     },
