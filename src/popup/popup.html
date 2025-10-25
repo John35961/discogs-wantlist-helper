@@ -15,7 +15,7 @@
   </div>
 
   <div x-data="popup" class="content">
-    <div x-data="auth" x-show="!loading && !authorized" class="container">
+    <div x-data="oauth" x-show="!loading && !authorized" class="container">
       <button @click="initAuthFlow" class="primary-button">Authorize Discogs</button>
     </div>
 
@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div x-data="tab">
+    <div x-data="tabs">
       <div x-show="!loading && authorized" class="tabs">
         <span @click="selectTab('search')" :class="isActiveTab('search')">
           <span>Search</span>
