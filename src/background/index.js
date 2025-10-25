@@ -1,5 +1,6 @@
 import { getRequestToken, getAccessToken, getIdentity } from './discogs/oauth.js';
-import { getUser, searchForReleases, addToWantlist } from './discogs/api.js';
+import { getUser, addToWantlist } from './discogs/user.js';
+import { searchDatabase } from './discogs/search.js';
 
 const actions = {
   async getRequestToken() {
@@ -23,8 +24,8 @@ const actions = {
     return { success: true, ...user };
   },
 
-  async searchForReleases({ query }) {
-    const results = await searchForReleases(query);
+  async searchDatabase({ query }) {
+    const results = await searchDatabase(query);
     return { success: true, results };
   },
 
@@ -32,7 +33,7 @@ const actions = {
     const release = await addToWantlist(releaseId);
     return { success: true, ...release };
   },
-}
+};
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   (async () => {

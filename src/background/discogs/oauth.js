@@ -1,6 +1,6 @@
 const DISCOGS_API_WRAPPER_BASE_URL = import.meta.env.VITE_DISCOGS_API_WRAPPER_BASE_URL;
 
-const getRequestToken = async () => {
+export const getRequestToken = async () => {
   const url = new URL(`${DISCOGS_API_WRAPPER_BASE_URL}/oauth/request_token`);
   url.searchParams.set('chromeRuntimeId', chrome.runtime.id);
 
@@ -15,7 +15,7 @@ const getRequestToken = async () => {
   return data;
 };
 
-const getAccessToken = async (requestToken, requestTokenSecret, oauthVerifier) => {
+export const getAccessToken = async (requestToken, requestTokenSecret, oauthVerifier) => {
   const res = await fetch(`${DISCOGS_API_WRAPPER_BASE_URL}/oauth/access_token`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -36,7 +36,7 @@ const getAccessToken = async (requestToken, requestTokenSecret, oauthVerifier) =
   return { accessToken, accessTokenSecret };
 };
 
-const getIdentity = async () => {
+export const getIdentity = async () => {
   const stored = await chrome.storage.local.get(['accessToken', 'accessTokenSecret']);
   const accessToken = stored.accessToken;
   const accessTokenSecret = stored.accessTokenSecret;
@@ -61,5 +61,3 @@ const getIdentity = async () => {
 
   return data;
 };
-
-export { getRequestToken, getAccessToken, getIdentity }

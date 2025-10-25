@@ -16,7 +16,7 @@ export default function () {
         return;
       };
 
-      const response = await chrome.runtime.sendMessage({ action: 'searchForReleases', query });
+      const response = await chrome.runtime.sendMessage({ action: 'searchDatabase', query });
 
       if (response.success) {
         this.results = response.results;
