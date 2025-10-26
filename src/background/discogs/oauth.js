@@ -32,11 +32,12 @@ export const getAccessToken = async (requestToken, requestTokenSecret, oauthVeri
 
   if (!res.ok) throw new Error(data.message);
 
-  const { accessToken, accessTokenSecret, jwtToken } = data;
+  const { accessToken, accessTokenSecret, jwtToken, refreshToken } = data;
   const accessTokens = {
     accessToken: encryptToken(accessToken),
     accessTokenSecret: encryptToken(accessTokenSecret),
     jwtToken: jwtToken,
+    refreshToken: refreshToken,
   };
   await chrome.storage.local.set({ ...accessTokens });
 
