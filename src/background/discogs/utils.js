@@ -1,8 +1,51 @@
 import CryptoJS from 'crypto-js';
 
+const DISCOGS_API_WRAPPER_BASE_URL = import.meta.env.VITE_DISCOGS_API_WRAPPER_BASE_URL;
 const TOKEN_ENCRYPTION_SECRET = import.meta.env.VITE_TOKEN_ENCRYPTION_SECRET;
 const DISCOGS_RELEASE_REGEX = /discogs\.com\/release\/(\d+)/;
 const FALLBACK_DISCOGS_RELEASE_REGEX = /%2Fwww.discogs.com%2F.+%2Frelease%2F(\d+)/;
+
+export const authenticatedFetch = async (path, options = {}) => {
+  const stored = await chrome.storage.local.get(['jwtToken', 'refreshToken']);
+  const jwtToken = stored.jwtToken;
+  const refreshToken = stored.refreshToken;
+
+  const res = await fetch(`${DISCOGS_API_WRAPPER_BASE_URL}${path}`, jwtReqOptions(jwtToken, options));
+
+  if (res.status === 401) {
+    const refreshResponse = await fetch(`${DISCOGS_API_WRAPPER_BASE_URL}/auth/refresh`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refreshToken }),
+      }
+    );
+
+    if (refreshResponse.ok) {
+      const data = await refreshResponse.json();
+      const newJwtToken = data.jwtToken;
+
+      await chrome.storage.local.set({ jwtToken: newJwtToken });
+
+      return await fetch(`${DISCOGS_API_WRAPPER_BASE_URL}${path}`, jwtReqOptions(newJwtToken, options));
+    } else {
+      chrome.runtime.sendMessage({ action: 'refreshTokenFailed' });
+    };
+  };
+
+  return res;
+};
+
+const jwtReqOptions = (jwtToken, options = {}) => {
+  return {
+    method: options.method,
+    headers: {
+      'authorization': `Bearer ${jwtToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(options.body) || null,
+  }
+};
 
 export const encryptToken = (token) => {
   return CryptoJS.AES.encrypt(token, TOKEN_ENCRYPTION_SECRET).toString();
@@ -27,7 +70,7 @@ export const parseReleaseId = (input) => {
   result ??= fallbackMatch && fallbackMatch[1] ? fallbackMatch[1] : null;
 
   if (!result) {
-    throw new Error("Must be a valid Discogs URL");
+    throw new Error('Must be a valid Discogs URL');
   };
 
   return result;
