@@ -28,8 +28,6 @@ export const authenticatedFetch = async (path, options = {}) => {
       await chrome.storage.local.set({ jwtToken: newJwtToken });
 
       return await fetch(`${DISCOGS_API_WRAPPER_BASE_URL}${path}`, jwtReqOptions(newJwtToken, options));
-    } else {
-      chrome.runtime.sendMessage({ action: 'refreshTokenFailed' });
     };
   };
 
