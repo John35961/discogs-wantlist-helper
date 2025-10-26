@@ -16,7 +16,7 @@ export const getRequestToken = async () => {
 };
 
 export const getAccessToken = async (requestToken, requestTokenSecret, oauthVerifier) => {
-  const res = await fetch(`${DISCOGS_API_WRAPPER_BASE_URL}/oauth/access_token`, {
+  const res = await fetch(`${DISCOGS_API_WRAPPER_BASE_URL}/auth/verify`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -30,8 +30,8 @@ export const getAccessToken = async (requestToken, requestTokenSecret, oauthVeri
 
   if (!res.ok) throw new Error(data.message);
 
-  const { accessToken, accessTokenSecret } = data;
-  await chrome.storage.local.set({ accessToken, accessTokenSecret });
+  const { accessToken, accessTokenSecret, jwtToken } = data;
+  await chrome.storage.local.set({ accessToken, accessTokenSecret, jwtToken });
 
   return { accessToken, accessTokenSecret };
 };
