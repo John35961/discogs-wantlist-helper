@@ -1,3 +1,5 @@
+import { decryptToken } from "./utils.js";
+
 const DISCOGS_API_WRAPPER_BASE_URL = import.meta.env.VITE_DISCOGS_API_WRAPPER_BASE_URL;
 
 export const getUser = async (username) => {
@@ -19,8 +21,8 @@ export const getUser = async (username) => {
 
 export const addToWantlist = async (releaseId) => {
   const stored = await chrome.storage.local.get(['accessToken', 'accessTokenSecret', 'username']);
-  const accessToken = stored.accessToken;
-  const accessTokenSecret = stored.accessTokenSecret;
+  const accessToken = decryptToken(stored.accessToken);
+  const accessTokenSecret = decryptToken(stored.accessTokenSecret);
   const userName = stored.username;
 
   const requestData = {

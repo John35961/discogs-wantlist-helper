@@ -1,3 +1,5 @@
+import { encryptToken, decryptToken } from "./utils.js";
+
 const DISCOGS_API_WRAPPER_BASE_URL = import.meta.env.VITE_DISCOGS_API_WRAPPER_BASE_URL;
 
 export const getRequestToken = async () => {
@@ -31,15 +33,20 @@ export const getAccessToken = async (requestToken, requestTokenSecret, oauthVeri
   if (!res.ok) throw new Error(data.message);
 
   const { accessToken, accessTokenSecret, jwtToken } = data;
-  await chrome.storage.local.set({ accessToken, accessTokenSecret, jwtToken });
+  const accessTokens = {
+    accessToken: encryptToken(accessToken),
+    accessTokenSecret: encryptToken(accessTokenSecret),
+    jwtToken: jwtToken,
+  };
+  await chrome.storage.local.set({ ...accessTokens });
 
   return { accessToken, accessTokenSecret };
 };
 
 export const getIdentity = async () => {
   const stored = await chrome.storage.local.get(['accessToken', 'accessTokenSecret']);
-  const accessToken = stored.accessToken;
-  const accessTokenSecret = stored.accessTokenSecret;
+  const accessToken = decryptToken(stored.accessToken);
+  const accessTokenSecret = decryptToken(stored.accessTokenSecret);
 
   if (!accessToken || !accessTokenSecret) {
     return;
