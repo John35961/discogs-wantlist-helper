@@ -3,6 +3,8 @@ import { decryptToken } from "./utils.js";
 const DISCOGS_API_WRAPPER_BASE_URL = import.meta.env.VITE_DISCOGS_API_WRAPPER_BASE_URL;
 
 export const getUser = async (username) => {
+  const stored = await chrome.storage.local.get(['jwtToken']);
+
   const requestData = {
     url: `${DISCOGS_API_WRAPPER_BASE_URL}/users/${username}`,
     method: 'GET'
@@ -10,6 +12,9 @@ export const getUser = async (username) => {
 
   const res = await fetch(requestData.url, {
     method: requestData.method,
+    headers: {
+      'authorization': `Bearer ${stored.jwtToken}`,
+    }
   });
 
   const data = await res.json();
@@ -20,7 +25,7 @@ export const getUser = async (username) => {
 };
 
 export const addToWantlist = async (releaseId) => {
-  const stored = await chrome.storage.local.get(['accessToken', 'accessTokenSecret', 'username']);
+  const stored = await chrome.storage.local.get(['accessToken', 'accessTokenSecret', 'jwtToken', 'username']);
   const accessToken = decryptToken(stored.accessToken);
   const accessTokenSecret = decryptToken(stored.accessTokenSecret);
   const userName = stored.username;
@@ -28,7 +33,10 @@ export const addToWantlist = async (releaseId) => {
   const requestData = {
     url: `${DISCOGS_API_WRAPPER_BASE_URL}/users/${userName}/wants/${releaseId}`,
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'authorization': `Bearer ${stored.jwtToken}`,
+    },
     body: JSON.stringify({
       accessToken: accessToken,
       accessTokenSecret: accessTokenSecret,
