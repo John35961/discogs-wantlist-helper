@@ -1,4 +1,4 @@
-import { getRequestToken, getAccessToken, getIdentity } from './discogs/oauth.js';
+import { getRequestToken, storeAccessToken, storeUsername } from './discogs/oauth.js';
 import { getUser, addToWantlist } from './discogs/user.js';
 import { searchDatabase } from './discogs/search.js';
 
@@ -9,9 +9,9 @@ const actions = {
   },
 
   async completeAuthFlow({ requestToken, requestTokenSecret, verifier }) {
-    await getAccessToken(requestToken, requestTokenSecret, verifier);
-    const identity = await getIdentity();
-    return { success: true, ...identity };
+    await storeAccessToken(requestToken, requestTokenSecret, verifier);
+    await storeUsername();
+    return { success: true };
   },
 
   async getUser({ username }) {
