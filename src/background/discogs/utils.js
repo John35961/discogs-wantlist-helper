@@ -21,14 +21,14 @@ export const authenticatedFetch = async (path, options = {}) => {
       }
     );
 
-    if (refreshResponse.ok) {
-      const data = await refreshResponse.json();
-      const newJwtToken = data.jwtToken;
+    if (!refreshResponse.ok) return refreshResponse;
 
-      await chrome.storage.local.set({ jwtToken: newJwtToken });
+    const data = await refreshResponse.json();
+    const newJwtToken = data.jwtToken;
 
-      return await fetch(`${DISCOGS_API_WRAPPER_BASE_URL}${path}`, jwtReqOptions(newJwtToken, options));
-    };
+    await chrome.storage.local.set({ jwtToken: newJwtToken });
+
+    return await fetch(`${DISCOGS_API_WRAPPER_BASE_URL}${path}`, jwtReqOptions(newJwtToken, options));
   };
 
   return res;

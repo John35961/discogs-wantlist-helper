@@ -14,11 +14,6 @@ const actions = {
     return { success: true, ...identity };
   },
 
-  async getIdentity() {
-    const identity = await getIdentity();
-    return { success: true, ...identity };
-  },
-
   async getUser({ username }) {
     const user = await getUser(username);
     return { success: true, ...user };
