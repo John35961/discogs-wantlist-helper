@@ -2,15 +2,23 @@ import Alpine from '@alpinejs/csp';
 
 export default function () {
   return {
+    foo: null,
+
     async displayUser() {
       this.loading = true;
-      Alpine.store('authorized', false);
 
-      const stored = await chrome.storage.local.get(['username']);
+      const stored = await chrome.storage.local.get(['jwtToken', 'username']);
       const username = stored.username;
+      const jwtToken = stored.jwtToken;
+
+      if (!jwtToken) {
+        this.loading = false;
+        return;
+      };
 
       if (!username) {
         this.loading = false;
+        return;
       };
 
       const response = await chrome.runtime.sendMessage({ action: 'getUser', username: username });
