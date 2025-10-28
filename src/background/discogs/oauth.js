@@ -44,14 +44,12 @@ export const storeAccessToken = async (requestToken, requestTokenSecret, oauthVe
   await chrome.storage.local.set({ ...accessTokens });
 };
 
-export const storeUsername = async () => {
+export const getIdentity = async () => {
   const stored = await chrome.storage.local.get(['accessToken', 'accessTokenSecret']);
   const accessToken = decryptToken(stored.accessToken);
   const accessTokenSecret = decryptToken(stored.accessTokenSecret);
 
-  if (!accessToken || !accessTokenSecret) {
-    return;
-  };
+  if (!accessToken || !accessTokenSecret) throw new Error('Missing access tokens');
 
   const url = new URL(`${DISCOGS_API_WRAPPER_BASE_URL}/oauth/identity`);
   url.searchParams.set('accessToken', accessToken);
@@ -65,5 +63,14 @@ export const storeUsername = async () => {
 
   if (!res.ok) throw new Error(data.message);
 
-  await chrome.storage.local.set({ username: data.username });
+  return data;
+};
+
+export const storeUsername = async () => {
+  try {
+    const identity = await getIdentity();
+    await chrome.storage.local.set({ username: identity.username });
+  } catch (error) {
+    throw new Error(error.message);
+  };
 };
