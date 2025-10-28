@@ -28,6 +28,9 @@ export default function () {
     },
 
     async addReleaseFromSearch(result) {
+      this.message = '';
+      this.error = '';
+
       const releaseId = result.release.id;
 
       const response = await chrome.runtime.sendMessage({ action: 'addToWantlist', releaseId });
