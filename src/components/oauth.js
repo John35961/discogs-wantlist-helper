@@ -3,6 +3,8 @@ const DISCOGS_WEBSITE_BASE_URL = import.meta.env.VITE_DISCOGS_WEBSITE_BASE_URL;
 export default function () {
   return {
     async initAuthFlow() {
+      this.loading = true;
+
       const { requestToken, requestTokenSecret } = await chrome.runtime.sendMessage({ action: 'getRequestToken' });
       const oauthUrl = `${DISCOGS_WEBSITE_BASE_URL}/oauth/authorize?oauth_token=${requestToken}`;
 
