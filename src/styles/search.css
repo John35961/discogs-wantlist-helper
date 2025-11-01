@@ -20,7 +20,7 @@
       background: #f4f4f4;
 
       .result-details {
-        width: 70%;
+        min-width: 50%;
         padding-right: 15px;
         display: flex;
         flex-direction: column;
@@ -28,18 +28,15 @@
 
       .result-title {
         font-weight: 700;
-        margin-top: 10px;
       }
 
       .result-year {
         font-style: italic;
-        margin-bottom: 10px;
       }
 
       .result-thumb {
-        width: 30%;
-        width: 75px;
-        height: 75px;
+        width: 100px;
+        height: 100px;
         border-radius: 5px;
       }
 
