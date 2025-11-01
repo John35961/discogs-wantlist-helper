@@ -8,130 +8,133 @@
 </head>
 
 <body>
-  <div class="header">
-    <img class="discogs-logo" src="../assets/images/discogs_logo.png" alt="Discogs Logo">
-    <h1 class="title">Wantlist Helper</h1>
-    <small>0.1</small>
-  </div>
-
-  <div x-data="popup" class="content">
-    <div x-data="oauth" x-show="!loading && !$store.authorized" class="container">
-      <button @click="initAuthFlow" class="primary-button">Authorize Discogs</button>
+  <div x-data="popup">
+    <div class="header">
+      <img class="discogs-logo" src="../assets/images/discogs_logo.png" alt="Discogs Logo">
+      <h1 class="title">Wantlist Helper</h1>
+      <small x-text="version"></small>
     </div>
 
-    <div class="container" x-data="user">
-      <div x-show="loading" class="loading-message">
-        <img src="../assets/images/loader.gif" />
-        <span>Loading...</span>
+    <div class="content">
+      <div x-data="oauth" x-show="!loading && !$store.authorized" class="container">
+        <button @click="initAuthFlow" class="primary-button">Authorize Discogs</button>
       </div>
 
-      <div x-show="!loading && $store.authorized" x-init="displayUser" class="status">
-        <div class="username" title="Your profile">
-          <img class="avatar" :src="user.avatar_url">
-          <a :href="user.uri" target="_blank" x-text="user.name"></a>
-        </div>
-        <div class="in-collection" title="In collection">
-          <i class="fa-solid fa-barcode"></i>
-          <span x-text="user.num_collection"></span>
-        </div>
-        <div class="in-wantlist" title="In wantlist">
-          <i class="fa-solid fa-eye"></i>
-          <span x-text="user.num_wantlist"></span>
-        </div>
-      </div>
-    </div>
-
-    <div x-data="tabs" x-init="init">
-      <div x-show="!loading && $store.authorized" class="tabs">
-        <span @click="selectTab('search')" :class="isActiveTab('search')">
-          <span>Search</span>
-        </span>
-        <span @click="selectTab('add')" :class="isActiveTab('add')">
-          <span>Add</span>
-        </span>
-      </div>
-
-      <div x-data="search" x-show="activeTab === 'search'" class="search">
-        <div class="form" x-show="!loading && $store.authorized">
-          <input class="form-input" type="text" x-model="query" placeholder="Enter an artist, a track..." />
-          <button class="primary-button" @click="handleSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
-        </div>
-
-        <template x-if="message">
-          <div class="response-message">
-            <i class="fa-solid fa-circle-check"></i>
-            <span x-text="message"></span>
-          </div>
-        </template>
-
-        <template x-if="error">
-          <div class="error-message">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-            <span x-text="error"></span>
-          </div>
-        </template>
-
-        <div x-show="fetching" class="container loading-message">
+      <div class="container" x-data="user">
+        <div x-show="loading" class="loading-message">
           <img src="../assets/images/loader.gif" />
-          <span>Searching...</span>
+          <span>Loading...</span>
         </div>
 
-        <template x-if="results.length">
-          <div class="results">
-            <template x-for="result in results" :key="result.release.id">
-              <div class="result">
-                <div class="result-details">
-                  <a class="result-title" :href="result.release.uri" target="_blank" x-text="result.release.title"></a>
-                  <span x-text="result.release.formats"></span>
-                  <span class="result-year" x-text="result.release.year"></span>
-                  <button @click="addReleaseFromSearch(result)" :class="onAdded(result)" class="secondary-button"
-                    x-text=" result.message"></button>
-                </div>
-                <img class="result-thumb" :src="result.release.thumb" />
-              </div>
-            </template>
+        <div x-show="!loading && $store.authorized" x-init="displayUser" class="status">
+          <div class="username" title="Your profile">
+            <img class="avatar" :src="user.avatar_url">
+            <a :href="user.uri" target="_blank" x-text="user.name"></a>
           </div>
-        </template>
+          <div class="in-collection" title="In collection">
+            <i class="fa-solid fa-barcode"></i>
+            <span x-text="user.num_collection"></span>
+          </div>
+          <div class="in-wantlist" title="In wantlist">
+            <i class="fa-solid fa-eye"></i>
+            <span x-text="user.num_wantlist"></span>
+          </div>
+        </div>
       </div>
 
-      <div x-data="add" x-show="activeTab === 'add'" class="add">
-        <div class="form" x-show="!loading && $store.authorized">
-          <input class="form-input" type="text" x-model="releaseId" placeholder="Enter URL or release ID..." />
-          <button class="primary-button" @click="handleAdd"><i class="fa-solid fa-plus"></i></button>
+      <div x-data="tabs" x-init="init">
+        <div x-show="!loading && $store.authorized" class="tabs">
+          <span @click="selectTab('search')" :class="isActiveTab('search')">
+            <span>Search</span>
+          </span>
+          <span @click="selectTab('add')" :class="isActiveTab('add')">
+            <span>Add</span>
+          </span>
         </div>
 
-        <template x-if="message">
-          <div class="response-message">
-            <i class="fa-solid fa-circle-check"></i>
-            <span x-text="message"></span>
+        <div x-data="search" x-show="activeTab === 'search'" class="search">
+          <div class="form" x-show="!loading && $store.authorized">
+            <input class="form-input" type="text" x-model="query" placeholder="Enter an artist, a track..." />
+            <button class="primary-button" @click="handleSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
           </div>
-        </template>
 
-        <template x-if="error">
-          <div class="error-message">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-            <span x-text="error"></span>
-          </div>
-        </template>
-
-        <div x-show="fetching" class="container loading-message">
-          <img src="../assets/images/loader.gif" />
-          <span>Adding...</span>
-        </div>
-
-        <template x-if="release">
-          <div class="release">
-            <div class="release-details">
-              <span class="release-title">
-                <a :href="release.uri" target="_blank" x-text="release.title"></a>
-              </span>
-              <span x-text="release.artists"></span>
-              <span x-text="release.formats"></span>
-              <span class="release-year" x-text="release.year"></span>
+          <template x-if="message">
+            <div class="response-message">
+              <i class="fa-solid fa-circle-check"></i>
+              <span x-text="message"></span>
             </div>
-            <img class="release-thumb" :src="release.thumb" />
+          </template>
+
+          <template x-if="error">
+            <div class="error-message">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              <span x-text="error"></span>
+            </div>
+          </template>
+
+          <div x-show="fetching" class="container loading-message">
+            <img src="../assets/images/loader.gif" />
+            <span>Searching...</span>
           </div>
-        </template>
+
+          <template x-if="results.length">
+            <div class="results">
+              <template x-for="result in results" :key="result.release.id">
+                <div class="result">
+                  <div class="result-details">
+                    <a class="result-title" :href="result.release.uri" target="_blank"
+                      x-text="result.release.title"></a>
+                    <span x-text="result.release.formats"></span>
+                    <span class="result-year" x-text="result.release.year"></span>
+                    <button @click="addReleaseFromSearch(result)" :class="onAdded(result)" class="secondary-button"
+                      x-text=" result.message"></button>
+                  </div>
+                  <img class="result-thumb" :src="result.release.thumb" />
+                </div>
+              </template>
+            </div>
+          </template>
+        </div>
+
+        <div x-data="add" x-show="activeTab === 'add'" class="add">
+          <div class="form" x-show="!loading && $store.authorized">
+            <input class="form-input" type="text" x-model="releaseId" placeholder="Enter URL or release ID..." />
+            <button class="primary-button" @click="handleAdd"><i class="fa-solid fa-plus"></i></button>
+          </div>
+
+          <template x-if="message">
+            <div class="response-message">
+              <i class="fa-solid fa-circle-check"></i>
+              <span x-text="message"></span>
+            </div>
+          </template>
+
+          <template x-if="error">
+            <div class="error-message">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              <span x-text="error"></span>
+            </div>
+          </template>
+
+          <div x-show="fetching" class="container loading-message">
+            <img src="../assets/images/loader.gif" />
+            <span>Adding...</span>
+          </div>
+
+          <template x-if="release">
+            <div class="release">
+              <div class="release-details">
+                <span class="release-title">
+                  <a :href="release.uri" target="_blank" x-text="release.title"></a>
+                </span>
+                <span x-text="release.artists"></span>
+                <span x-text="release.formats"></span>
+                <span class="release-year" x-text="release.year"></span>
+              </div>
+              <img class="release-thumb" :src="release.thumb" />
+            </div>
+          </template>
+        </div>
       </div>
     </div>
   </div>
