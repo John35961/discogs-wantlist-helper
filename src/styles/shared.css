@@ -49,6 +49,13 @@
     padding: 8px 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
+
+    &:focus {
+      outline: none;
+      border-color: #17a34a;
+      box-shadow: 0 0 5px 2px rgba(23, 163, 74, 0.2);
+      transition: border-color 0.2s, box-shadow 0.1s;
+    }
   }
 }
 
