@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div x-data="tabs">
+    <div x-data="tabs" x-init="init">
       <div x-show="!loading && $store.authorized" class="tabs">
         <span @click="selectTab('search')" :class="isActiveTab('search')">
           <span>Search</span>
@@ -51,7 +51,7 @@
         </span>
       </div>
 
-      <div x-data="search" x-show="tabName === 'search'" class="search">
+      <div x-data="search" x-show="activeTab === 'search'" class="search">
         <div class="form" x-show="!loading && $store.authorized">
           <input class="form-input" type="text" x-model="query" placeholder="Enter an artist, a track..." />
           <button class="primary-button" @click="handleSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -94,7 +94,7 @@
         </template>
       </div>
 
-      <div x-data="add" x-show="tabName === 'add'" class="add">
+      <div x-data="add" x-show="activeTab === 'add'" class="add">
         <div class="form" x-show="!loading && $store.authorized">
           <input class="form-input" type="text" x-model="releaseId" placeholder="Enter URL or release ID..." />
           <button class="primary-button" @click="handleAdd"><i class="fa-solid fa-plus"></i></button>

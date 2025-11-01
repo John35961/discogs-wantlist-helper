@@ -1,9 +1,18 @@
 export default function () {
   return {
-    tabName: 'search',
+    activeTab: 'search',
 
-    selectTab(tabName) {
-      this.tabName = tabName;
+    async init() {
+      const stored = await chrome.storage.local.get(['lastTab']);
+      if (stored.lastTab) {
+        this.activeTab = stored.lastTab;
+      }
+    },
+
+    async selectTab(tabName) {
+      this.activeTab = tabName;
+      await chrome.storage.local.set({ lastTab: tabName });
+
       this.query = '';
       this.releaseId = '';
       this.release = null;
@@ -12,7 +21,7 @@ export default function () {
     },
 
     isActiveTab(tabName) {
-      return this.tabName === tabName ? 'tab active' : 'tab'
+      return this.activeTab === tabName ? 'tab active' : 'tab'
     },
   };
 };
