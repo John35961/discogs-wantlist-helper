@@ -2,7 +2,7 @@ import CryptoJS from 'crypto-js';
 
 const DISCOGS_API_WRAPPER_BASE_URL = import.meta.env.VITE_DISCOGS_API_WRAPPER_BASE_URL;
 const TOKEN_ENCRYPTION_SECRET = import.meta.env.VITE_TOKEN_ENCRYPTION_SECRET;
-const DISCOGS_RELEASE_REGEX = /discogs\.com\/release\/(\d+)/;
+const DISCOGS_RELEASE_REGEX = /discogs\.com\/(?:.+\/)?release\/(\d+)/;
 const FALLBACK_DISCOGS_RELEASE_REGEX = /www\.discogs\.com%2F.*release%2F(\d+)/;
 
 export const authenticatedFetch = async (path, options = {}) => {
