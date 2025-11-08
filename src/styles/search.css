@@ -41,9 +41,10 @@
         border-radius: 5px;
       }
 
-      .result-added {
-        color: #17a34a;
-        border: 1px solid #17a34a;
+      .result-removable {
+        background-color: rgb(255, 227, 227);
+        border: 1px solid red;
+        color: red;
       }
     }
   }

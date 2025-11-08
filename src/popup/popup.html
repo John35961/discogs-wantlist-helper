@@ -79,13 +79,13 @@
           <template x-if="results.length">
             <div class="results">
               <template x-for="result in results" :key="result.release.uuid">
-                <div class=" result">
+                <div class=" result" x-data="resultItem">
                   <div class="result-details">
                     <a class="result-title" :href="result.release.uri" target="_blank"
                       x-text="result.release.title"></a>
                     <span x-text="result.release.formats"></span>
                     <span class="result-year" x-text="result.release.year"></span>
-                    <button @click="addReleaseFromSearch(result)" :class="onAdded(result)" class="secondary-button"
+                    <button @click="handleRelease(result)" :class="onAdded(result)" class="secondary-button"
                       x-text=" result.message"></button>
                   </div>
                   <img class="result-thumb" :src="result.release.thumb" />
