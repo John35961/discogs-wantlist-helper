@@ -68,7 +68,7 @@
   color: white;
   font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.1s;
 
   &:hover {
     background-color: #17a34a;
@@ -85,11 +85,28 @@
   color: rgb(9, 43, 11);
   font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.1s;
 
   &:hover {
     color: rgb(9, 43, 11);
     background-color: #d7ffe7;
+  }
+}
+
+.danger-button {
+  width: fit-content;
+  padding: 8px 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: red;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.1s;
+
+  &:hover {
+    color: red;
+    background-color: rgb(255, 236, 236);
   }
 }
 

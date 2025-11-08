@@ -34,7 +34,7 @@ export default function () {
     },
 
     onAdded(result) {
-      if (result.message == 'Remove') return 'result-removable';
+      if (result.message == 'Remove') return 'danger-button';
     },
   };
 };
