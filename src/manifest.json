@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Discogs Wantlist Helper (Alpha)",
   "description": "Add a record to your Discogs wantlist in a single click.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "permissions": [
     "identity",
     "storage",
