@@ -20,8 +20,8 @@ const actions = {
     return { success: true, ...user };
   },
 
-  async searchDatabase({ query }) {
-    const results = await searchDatabase(query);
+  async searchDatabase({ query, page }) {
+    const results = await searchDatabase(query, page);
     return { success: true, results };
   },
 

@@ -76,11 +76,10 @@
             <img src="../assets/images/loader.gif" />
             <span>Searching...</span>
           </div>
-
           <template x-if="results.length">
             <div class="results">
-              <template x-for="result in results" :key="result.release.id">
-                <div class="result">
+              <template x-for="result in results" :key="result.release.uuid">
+                <div class=" result">
                   <div class="result-details">
                     <a class="result-title" :href="result.release.uri" target="_blank"
                       x-text="result.release.title"></a>
@@ -92,6 +91,15 @@
                   <img class="result-thumb" :src="result.release.thumb" />
                 </div>
               </template>
+            </div>
+          </template>
+          <template x-if="results.length && hasNextPage">
+            <div class="pagination">
+              <button @click="fetchNextResults(nextPage)" class="secondary-button">More</button>
+              <div class="remaining-results-count">
+                <span x-text="remainingResultsCount"></span>
+                <span>more results</span>
+              </div>
             </div>
           </template>
         </div>

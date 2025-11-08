@@ -47,4 +47,16 @@
       }
     }
   }
+
+  .pagination {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0;
+
+    .remaining-results-count {
+      margin-top: 10px;
+      color: #858585;
+    }
+  }
 }
