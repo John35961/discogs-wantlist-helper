@@ -54,26 +54,5 @@ export default function () {
         this.error = response.error;
       };
     },
-
-    async addReleaseFromSearch(result) {
-      this.message = '';
-      this.error = '';
-
-      const releaseId = result.release.id;
-
-      const response = await chrome.runtime.sendMessage({ action: 'addToWantlist', releaseId });
-
-      if (response.success) {
-        result.message = 'Added';
-        this.user.num_wantlist++;
-      }
-      else {
-        this.error = response.error;
-      };
-    },
-
-    onAdded(result) {
-      if (result.message == 'Added') return 'result-added';
-    },
   };
 };

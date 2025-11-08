@@ -1,5 +1,5 @@
 import { getRequestToken, storeAccessToken, getIdentity, storeUsername } from './discogs/oauth.js';
-import { getUser, addToWantlist } from './discogs/user.js';
+import { getUser, addToWantlist, removeFromWantlist } from './discogs/user.js';
 import { searchDatabase } from './discogs/search.js';
 
 const actions = {
@@ -28,6 +28,11 @@ const actions = {
   async addToWantlist({ releaseId }) {
     const release = await addToWantlist(releaseId);
     return { success: true, ...release };
+  },
+
+  async removeFromWantlist({ releaseId }) {
+    await removeFromWantlist(releaseId);
+    return { success: true };
   },
 };
 

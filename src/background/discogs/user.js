@@ -30,3 +30,23 @@ export const addToWantlist = async (releaseId) => {
 
   return data;
 };
+
+export const removeFromWantlist = async (releaseId) => {
+  const stored = await chrome.storage.local.get(['accessToken', 'accessTokenSecret', 'jwtToken', 'username']);
+  const accessToken = decryptToken(stored.accessToken);
+  const accessTokenSecret = decryptToken(stored.accessTokenSecret);
+  const userName = stored.username;
+
+  const res = await authenticatedFetch(`/users/${userName}/wants/${releaseId}`, {
+    method: 'DELETE',
+    body: {
+      accessToken: accessToken,
+      accessTokenSecret: accessTokenSecret,
+    }
+  });
+
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.message);
+  };
+};
