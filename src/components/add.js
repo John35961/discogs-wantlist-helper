@@ -27,7 +27,6 @@ export default function () {
           this.user.num_wantlist++;
         } else {
           this.error = response.error;
-
         };
       } catch (error) {
         this.error = error.message;
