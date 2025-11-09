@@ -102,6 +102,9 @@
               </div>
             </div>
           </template>
+          <template x-if="results.length">
+            <a :href="supportLink" target="_blank" class="support-link">Support this project</a>
+          </template>
         </div>
 
         <div x-data="add" x-show="activeTab === 'add'" class="add">
