@@ -3,6 +3,7 @@
 @import url('user.css');
 @import url('search.css');
 @import url('add.css');
+@import url('fonts.css');
 
 body {
   width: 300px;
