@@ -5,9 +5,7 @@
   "version": "0.2.0",
   "permissions": [
     "identity",
-    "storage",
-    "activeTab",
-    "scripting"
+    "storage"
   ],
   "background": {
     "service_worker": "src/background/index.js",
@@ -18,21 +16,6 @@
   },
   "host_permissions": [
     "https://discogs-wantlist-helper-server.onrender.com/*"
-  ],
-  "externally_connectable": {
-    "matches": [
-      "https://*.chromiumapp.org/*"
-    ]
-  },
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "vendor/*"
-      ],
-      "matches": [
-        "<all_urls>"
-      ]
-    }
   ],
   "icons": {
     "16": "src/assets/images/icon16.png",
