@@ -16,16 +16,6 @@
   "action": {
     "default_popup": "src/popup/popup.html"
   },
-  "content_scripts": [
-    {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "src/content/index.js"
-      ]
-    }
-  ],
   "host_permissions": [
     "https://discogs-wantlist-helper-server.onrender.com/*"
   ],
