@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Chrome extension to let you add a record to your Discogs wantlist efortlessly. Useful when you're on a website (like YouTube), find a cool record and want to add it right away, without going to the Discogs website. The extension works in conjuction with the [Discogs Wantlist Helper Server](https://github.com/John35961/discogs-wantlist-helper-server).
+Chrome extension to let you add a record to your Discogs wantlist efortlessly. Useful when you're on a website (like YouTube), find a cool record and want to add it right away, without going to the Discogs website.
 
 1. Authorize your Discogs account
 2. Type in any artist or track (like `Aqua Bassino`), or enter any valid Discogs release URL or release ID (like `https://www.discogs.com/release/505-Aqua-Bassino-Swirl-EP`)
@@ -30,9 +30,9 @@ Chrome extension to let you add a record to your Discogs wantlist efortlessly. U
 
 ## Run locally
 
-1. First make sure your local Discogs API wrapper is up and running at `http://localhost:3000/discogs/api/v1`
+1. The extension relies on the [Discogs Wantlist Helper Server](https://github.com/John35961/discogs-wantlist-helper-server) as a backend. You should first clone that repo, then boot up your local Discogs API wrapper, ensuring it's running at `http://localhost:3000/discogs/api/v1`.
 
-2. Clone the repo with `git clone git@github.com:John35961/discogs-wantlist-helper.git` then `cd discogs-helper`
+2. Then clone this repo with `git clone git@github.com:John35961/discogs-wantlist-helper.git` then `cd discogs-helper`
 
 3. Install dependencies with `npm install`
 
