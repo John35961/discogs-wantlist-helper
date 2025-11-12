@@ -1,7 +1,5 @@
 # Discogs Wantlist Helper
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
 ![Discogs Wantlist Helper marquee promo tile](src/assets/images/marquee_promo_tile.jpg)
 
 Simple Chrome extension to let you add a record to your Discogs wantlist efortlessly. Useful when you're on a website (like YouTube), find a cool record and want to add it right away, without going to the Discogs website.
