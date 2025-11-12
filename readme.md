@@ -10,38 +10,37 @@ Simple Chrome extension to let you add a record to your Discogs wantlist efortle
 4. The release is now in your wantlist!
 
 For a direct add, the extension currently recognizes the following URLs:
+
 - Discogs URL like `https://www.discogs.com/release/505-Aqua-Bassino-Swirl-EP`
 - Youtube redirect URL like `https://www.youtube.com/redirect?event=video_description&q=https%3A%2F%2Fwww.discogs.com%2FCarl-Max-From-Heaven-To-Hell-EP%2Frelease%2F163748`)
 
-See [privacy policy](https://jeanguillet.com/discogs_wantlist_helper_privacy_policy).
+[Privacy policy](https://jeanguillet.com/discogs_wantlist_helper_privacy_policy)
 
 ## Contributing
 
-I'm opened to any suggestions to make the extension. I'm also working on new features actively. If you notice a bug or want to submit a feature idea, don't hesitate to open an issue or Pull Request.
+I'm opened to any suggestions to make the extension better. I'm also working on new features actively. If you notice a bug or want to submit a feature idea, don't hesitate to open an issue or a Pull Request.
 
 ![Discogs Wantlist Helper marquee promo tile](src/assets/images/marquee_promo_tile.jpg)
 
----
-
 ## Tools
 
-* [Chrome Extensions Manifest V3](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3?hl=fr)
+- [Chrome Extensions Manifest V3](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3?hl=fr)
 
-* [Discogs API](https://api.discogs.com/) (uses OAuth 1.0a)
+- [Discogs API](https://api.discogs.com/) (uses OAuth 1.0a)
 
-* [Vite](https://vite.dev/) to bundle the extension
+- [Vite](https://vite.dev/) to bundle the extension
 
-* [Alpine.js CSP (Content-Security Policy) Build](https://alpinejs.dev/advanced/csp) for frontend interactions
+- [Alpine.js CSP (Content-Security Policy) Build](https://alpinejs.dev/advanced/csp) for frontend interactions
 
 ## Dev dependencies
 
-* vite
-* @crxjs/vite-plugin
+- vite
+- @crxjs/vite-plugin
 
 ## Dependencies
 
-* @alpinejs/csp
-* @fortawesome/fontawesome-free
+- @alpinejs/csp
+- @fortawesome/fontawesome-free
 
 ## Run locally
 
