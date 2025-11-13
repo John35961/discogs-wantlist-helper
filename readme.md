@@ -14,7 +14,7 @@ For a direct add, the extension currently recognizes the following URLs:
 - Discogs URL like `https://www.discogs.com/release/505-Aqua-Bassino-Swirl-EP`
 - Youtube redirect URL like `https://www.youtube.com/redirect?event=video_description&q=https%3A%2F%2Fwww.discogs.com%2FCarl-Max-From-Heaven-To-Hell-EP%2Frelease%2F163748`)
 
-[Privacy policy](https://jeanguillet.com/discogs_wantlist_helper_privacy_policy)
+Read the [privacy policy](https://jeanguillet.com/discogs_wantlist_helper_privacy_policy)
 
 ## Contributing
 
