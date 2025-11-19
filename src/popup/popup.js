@@ -13,6 +13,9 @@ Alpine.data('popup', () => ({
   authorized: false,
   loading: true,
   fetching: false,
+  user: {},
+  release: null,
+  releaseId: null,
   message: '',
   error: '',
 }));

@@ -2,9 +2,6 @@ import { parseReleaseId } from '../background/discogs/utils.js';
 
 export default function () {
   return {
-    release: null,
-    releaseId: null,
-
     async handleAdd() {
       this.fetching = true;
       this.release = null;
