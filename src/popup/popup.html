@@ -54,7 +54,7 @@
         <div x-data="search" x-init="init" x-show="activeTab === 'search'" class="search">
           <div class="form">
             <input class="form-input" type="text" x-model="query" @keyup.enter="handleSearch"
-              placeholder="Enter an artist, a track..." />
+              placeholder="Enter an artist, a track..." spellcheck="false" />
             <button class="primary-button" @click="handleSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
           </div>
 
