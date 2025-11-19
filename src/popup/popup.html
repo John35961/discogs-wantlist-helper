@@ -41,8 +41,8 @@
         </div>
       </div>
 
-      <div x-data="tabs" x-init="init">
-        <div x-show="!loading && $store.authorized" class="tabs">
+      <div x-data="tabs" x-init="init" x-show="!loading && $store.authorized">
+        <div class="tabs">
           <span @click="selectTab('search')" :class="isActiveTab('search')">
             <span>Search</span>
           </span>
@@ -51,8 +51,8 @@
           </span>
         </div>
 
-        <div x-data="search" x-show="activeTab === 'search'" class="search">
-          <div class="form" x-show="!loading && $store.authorized">
+        <div x-data="search" x-init="init" x-show="activeTab === 'search'" class="search">
+          <div class="form">
             <input class="form-input" type="text" x-model="query" @keyup.enter="handleSearch"
               placeholder="Enter an artist, a track..." />
             <button class="primary-button" @click="handleSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -76,7 +76,8 @@
             <img src="../assets/images/loader.gif" />
             <span>Searching...</span>
           </div>
-          <template x-if="results.length">
+
+          <template x-if="!fetching && results">
             <div class="results">
               <template x-for="result in results" :key="result.release.uuid">
                 <div class=" result" x-data="resultItem">
@@ -93,7 +94,8 @@
               </template>
             </div>
           </template>
-          <template x-if="results.length && hasNextPage">
+
+          <template x-if="!fetching && results && hasNextPage">
             <div class="pagination">
               <button @click="fetchNextResults(nextPage)" class="secondary-button">More</button>
               <div class="remaining-results-count">
@@ -102,7 +104,8 @@
               </div>
             </div>
           </template>
-          <template x-if="results.length">
+
+          <template x-if="!fetching && results">
             <a :href="supportLink" target="_blank" class="support-link">Support this project</a>
           </template>
         </div>
