@@ -2,7 +2,7 @@
 
 ![Discogs Wantlist Helper marquee promo tile](src/assets/images/marquee_promo_tile.jpg)
 
-Simple Chrome extension to let you add a record to your Discogs wantlist efortlessly. Useful when you're on a website (like YouTube), find a cool record and want to add it right away, without going to the Discogs website.
+Chrome extension to let you add a record to your Discogs wantlist effortlessly. Useful when you're on a website (like YouTube), find a cool record and want to add it right away, without going to the Discogs website.
 
 1. Authorize your Discogs account
 2. Type in any artist or track (like `Aqua Bassino`), then browse through the Discogs library to add or remove a release
@@ -14,7 +14,7 @@ For a direct add, the extension currently recognizes the following URLs:
 - Discogs URL like `https://www.discogs.com/release/505-Aqua-Bassino-Swirl-EP`
 - Youtube redirect URL like `https://www.youtube.com/redirect?event=video_description&q=https%3A%2F%2Fwww.discogs.com%2FCarl-Max-From-Heaven-To-Hell-EP%2Frelease%2F163748`)
 
-[Privacy policy](https://jeanguillet.com/discogs_wantlist_helper_privacy_policy)
+Read the [privacy policy](https://jeanguillet.com/discogs_wantlist_helper_privacy_policy)
 
 ## Contributing
 
