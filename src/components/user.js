@@ -8,14 +8,8 @@ export default function () {
     async displayUser() {
       this.loading = true;
 
-      const stored = await chrome.storage.local.get(['jwtToken', 'username']);
+      const stored = await chrome.storage.local.get(['username']);
       const username = stored.username;
-      const jwtToken = stored.jwtToken;
-
-      if (!jwtToken) {
-        this.loading = false;
-        return;
-      };
 
       if (!username) {
         this.loading = false;
