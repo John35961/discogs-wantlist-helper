@@ -21,7 +21,11 @@ export default function () {
     },
 
     isActiveTab(tabName) {
-      return this.activeTab === tabName ? 'tab active' : 'tab'
+      return this.activeTab === tabName;
+    },
+
+    activeTabClass(tabName) {
+      return this.activeTab === tabName ? 'tab active' : 'tab';
     },
   };
 };
