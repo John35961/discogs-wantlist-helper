@@ -9,6 +9,10 @@ body {
   width: 300px;
   margin: 0;
   font-family: 'Inter', sans-serif;
+
+  &::selection {
+    background-color: #d7ffe7;
+  }
 }
 
 h1 {
