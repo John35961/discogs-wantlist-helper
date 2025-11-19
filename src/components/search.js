@@ -2,8 +2,8 @@ const MAX_STORED_RESULTS = 50;
 
 export default function () {
   return {
+    query: '',
     results: [],
-    fetching: false,
     hasNextPage: false,
     nextPage: null,
     remainingResultsCount: 0,

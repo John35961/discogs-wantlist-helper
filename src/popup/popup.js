@@ -10,14 +10,9 @@ import '@fortawesome/fontawesome-free/css/all.css';
 Alpine.data('popup', () => ({
   version: import.meta.env.VITE_VERSION,
   supportLink: import.meta.env.VITE_SUPPORT_LINK,
-  loading: true,
   authorized: false,
-  username: null,
-  user: {},
-  query: '',
-  results: [],
-  releaseId: null,
-  release: null,
+  loading: true,
+  fetching: false,
   message: '',
   error: '',
 }));

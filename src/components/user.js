@@ -2,7 +2,8 @@ import Alpine from '@alpinejs/csp';
 
 export default function () {
   return {
-    foo: null,
+    username: null,
+    user: {},
 
     async displayUser() {
       this.loading = true;
