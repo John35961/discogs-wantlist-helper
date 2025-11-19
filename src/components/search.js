@@ -25,9 +25,9 @@ export default function () {
       const query = this.query;
 
       if (!query) {
-        this.error = 'Search query is missing';
         this.fetching = false;
         this.results = null;
+        this.error = 'Search query is missing';
         return;
       };
 
@@ -51,6 +51,7 @@ export default function () {
           remainingResultsCount: this.remainingResultsCount,
         });
       } else {
+        this.results = null;
         this.error = response.error;
       };
 
@@ -77,6 +78,7 @@ export default function () {
           remainingResultsCount: this.remainingResultsCount,
         });
       } else {
+        this.results = null;
         this.error = response.error;
       };
     },
