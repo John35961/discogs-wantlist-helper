@@ -51,6 +51,8 @@ export default function () {
           remainingResultsCount: this.remainingResultsCount,
         });
       } else {
+        await chrome.storage.local.remove(['query', 'results', 'hasNextPage', 'nextPage', 'remainingResultsCount']);
+
         this.results = null;
         this.error = response.error;
       };
