@@ -1,6 +1,6 @@
 export default function () {
   return {
-    activeTab: '',
+    activeTab: 'search',
 
     async init() {
       const stored = await chrome.storage.local.get(['lastTab']);
